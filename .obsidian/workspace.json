@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "03 - Classification et séparations linéaires.md",
+                "file": "04 - Données non linéairement séparables.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "03 - Classification et séparations linéaires"
+              "title": "04 - Données non linéairement séparables"
             }
           }
         ]
@@ -99,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "03 - Classification et séparations linéaires.md",
+                "file": "04 - Données non linéairement séparables.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +118,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "03 - Classification et séparations linéaires.md",
+                "file": "04 - Données non linéairement séparables.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -161,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "03 - Classification et séparations linéaires.md",
+                "file": "04 - Données non linéairement séparables.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -191,14 +191,22 @@
   "active": "71f3288e6f291df3",
   "lastOpenFiles": [
     "AGENTS.md",
-    "scripts/generer_figures_03.py",
-    "Entrypoint.md",
-    "scripts",
     "03 - Classification et séparations linéaires.md",
+    "04 - Données non linéairement séparables.md",
+    "assets/04-complexite-generalisation.png",
+    "assets/04-phi-cercles-3D.png",
+    "assets/04-phi-XOR-3D.png",
+    "assets/04-non-separables-exemples.png",
+    "scripts/generer_figures_04.py",
+    "Entrypoint.md",
+    "assets/03-intra-epoque1.png",
+    "assets/03-hebb-pasapas.png",
+    "assets/03-rosenblatt-pasapas.png",
+    "assets/03-hebb-vs-rosenblatt.png",
+    "assets/03-rosenblatt-correction.png",
+    "scripts/generer_figures_03.py",
+    "scripts",
     "assets/03-exemple-XOR.png",
-    "assets/03-exemple-ET.png",
-    "assets/03-exemple-OU.png",
-    "assets/03-geometrie-hyperplan.png",
     "assets",
     "02 - Qu'est-ce qu'apprendre.md",
     "opencode.json"
