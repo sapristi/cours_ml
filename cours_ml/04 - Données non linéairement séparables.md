@@ -9,7 +9,7 @@ Contexte: |-
   Partie 4 : comprendre l'échec du linéaire, introduire l'idée de projection
   non linéaire, et préparer les parties 5 (MLP) et 6 (RBF).
 ---
-
+gh
 > [!abstract] Objectif de cette partie
 > Montrer que le perceptron échoue dès que les données ne sont pas linéairement séparables, introduire l'idée centrale du cours : **projeter avec $\Phi(x)$ dans un espace plus grand où ça le devient**. Voir le prix à payer : **complexification et surapprentissage**.
 
@@ -104,7 +104,7 @@ Ajouter des dimensions marche toujours sur le train — et c'est le piège.
 ![[assets/04-complexite-generalisation.png]]
 
 - Erreur train : décroît avec la complexité (dimension de $\Phi$, degré polynomial, nombre de neurones). Avec assez de features, on sépare toujours $n$ points.
-- Erreur test : courbe en **U**. D'abord elle baisse (on corrige le sous-apprentissage), puis elle remonte (on mémorise, voir [[02 - Qu'est-ce qu'apprendre]]).
+- Erreur test : courbe en **U**. D'abord elle baisse (on corrige le sous-apprentissage), puis elle remonte (on mémorise, voir [[1 - Qu'est-ce qu'apprendre ?]]).
 - À droite de la courbe : **surapprentissage**, détaillé en partie 7.
 
 > [!danger] Ne pas confondre

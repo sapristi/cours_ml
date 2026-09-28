@@ -1,6 +1,6 @@
 # Contexte
 Cours pour des étudiants de 4e année post-bac. 18h au total.
-On utilisera python et Octave. 
+On utilisera python / numpy. 
 ## Objectif matière
  - Être sensibilisé aux multiples problématiques liées à l'apprentissage artificiel, et plus particulièrement à l'apprentissage supervisé. Connaître et appliquer les modèles les plus utilisés et des algorithmes d'apprentissage associés.
  - Implémenter ces derniers
@@ -44,3 +44,6 @@ Il faudra placer une évaluation lors du cours du 29/10
 	c. Considérations théoriques
 	d. Projection dans un espace de dimension infinie
 9. Machines à noyau
+
+## Bibliographie
+Voir [[Bibliographie]]
