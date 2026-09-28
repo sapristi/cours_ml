@@ -6,10 +6,10 @@ authors = [
     {name = "Mathias Millet", email = "mathias@mmill.eu"},
 ]
 dependencies = [
-    "jupyterlite-core==0.3.0",
-    "jupyterlab~=4.1.5",
-    "notebook~=7.1.2",
-    "jupyterlite-pyodide-kernel==0.3.2",
+    "jupyterlite-core==0.8.5",
+    "jupyterlab~=4.6.0",
+    "notebook~=7.6.0",
+    "jupyterlite-pyodide-kernel[lock]==0.8.6",
     "jupyterlab-language-pack-fr-FR",
     "jupyterlab-night",
     "jupyterlab-miami-nights",
@@ -19,11 +19,7 @@ dependencies = [
     "pydantic<2",
     "grandalf>=0.8",
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 readme = "README.md"
 license = {text = "Creative Commons Attribution Non Commercial Share Alike 4.0 International"}
-
-
-[tool.pdm]
-distribution = false
 

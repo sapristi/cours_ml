@@ -1,0 +1,10 @@
+{
+  "LiteBuildConfig": {
+    "contents": ["td_01_perceptron/perceptron.ipynb"],
+    "output_dir": "dist"
+  },
+  "PyodideLockAddon": {
+    "enabled": true,
+    "prefetch": ["numpy", "matplotlib"]
+  }
+}

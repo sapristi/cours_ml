@@ -45,7 +45,7 @@ Indice: on pourra s'intéresser à la "frontière" (qui sépare les deux zones d
 Quelle serait le problème si on n'avait pas introduit le *biais* (poids $w_0$) ?
 
 ### [!faq] Exercice 3
-Implémenter en python un tel neurone.
+Implémenter en python un tel neurone, à l'aide d'une classe `Perceptron`.
 
 # 2. Apprentissage
 
@@ -58,17 +58,38 @@ Le principe est le suivant:
 	- s'ils sont égaux, on ne fait rien
 	- sinon, on modifie les poids:
 		- On modifie chaque poids $w_i  ← w_i - r*(y^j - t^j)*x_i$ 
-
-
+- Recommencer l'étape précédente tant que les poids ont changé
 
 
 ### [!faq] Exercice 4
-Ajouter une méthode `learn` à la classe `Perceptron`, qui prends en entrée
+Ajouter une méthode `learn` à la classe `Perceptron`, qui prends en entrée un vecteur d'apprentissage, la cible, et le pas d'apprentissage, et mets à jour les poids du perceptron (une étape d'apprentissage).
+
+Vérifier que la méthode fonctionne correctement sur les entrées suivantes. On pourra utiliser les fonctions fournies pour afficher le
+
+**Entrée 1**
 
 | x1  | x2  | t   |
 | --- | --- | --- |
 | 1   | 1   | 1   |
-| 1   | 0   | 1   |
-| 0   | 1   | 1   |
+| 1   | 0   | 0   |
+| 0   | 1   | 0   |
 | 0   | 0   | 0   |
 
+**Entrée 2**
+
+| x1  | x2  | t   |
+| --- | --- | --- |
+| -1  | -1  | 1   |
+| 1   | 1   | 0   |
+
+**Entrée 3**
+
+| x1   | x2   | t   |
+| ---- | ---- | --- |
+| -1.5 | 0.2  | 1   |
+| -1   | 0.5  | 1   |
+| -0.5 | 1    | 1   |
+| -1.5 | -1   | 0   |
+| -1   | -0.6 | 0   |
+| -0.5 | 0    | 0   |
+### [!faq] Exercice 5

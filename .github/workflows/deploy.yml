@@ -17,17 +17,15 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
       - name: Install the dependencies
         run: |
-          pip install pdm
-          pdm install
+          uv sync
       - name: Build the JupyterLite site
         run: |
-          pdm run jupyter lite build --contents content --output-dir dist
-      - name: post-treatment
-        run: |
-          pdm run python other/post_treatment.py dist/files/
+          uv run jupyter lite build --output-dir dist
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
