@@ -26,6 +26,9 @@ jobs:
       - name: Build the JupyterLite site
         run: |
           uv run jupyter lite build --output-dir dist
+      - name: post-treatment
+        run: |
+          uv run python scripts/filter_notebook.py --in-place dist/files/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
