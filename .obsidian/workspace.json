@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2 - Perceptron.md",
+                "file": "cours_ml/2 - Perceptron.md",
                 "mode": "source",
                 "source": false
               },
@@ -206,18 +206,21 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "callout-studio:Insertion rapide d'un callout de bloc": false,
       "switcher:Ouvrir le sélecteur rapide": false,
       "graph:Ouvrir la vue graphique": false,
       "canvas:Créer une nouvelle toile": false,
       "daily-notes:Ouvrir la note quotidienne": false,
       "templates:Insérer le modèle": false,
       "command-palette:Ouvrir la palette de commandes": false,
-      "bases:Créer une nouvelle base": false,
-      "callout-studio:Quick insert block callout": false
+      "bases:Créer une nouvelle base": false
     }
   },
   "active": "5f6468813b637858",
   "lastOpenFiles": [
+    "cours_ml/TD.md",
+    "cours_ml/2 - Perceptron.md",
+    "cours_ml/1 - Qu'est-ce qu'apprendre ?.md",
     "1 - Qu'est-ce qu'apprendre ?.md",
     "03 - Classification et séparations linéaires.md",
     "2 - Perceptron.md",
