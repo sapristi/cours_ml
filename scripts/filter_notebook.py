@@ -35,6 +35,31 @@ def truncate_skip(lines: list[str]) -> list[str]:
     else:
         return out
     return out
+
+
+def strip_export(lines: list[str]) -> list[str]:
+    """Enlève les lignes marqueurs # EXPORT du notebook exporté.
+
+    - ligne pure commentaire contenant EXPORT (ex. "# EXPORT\\n") : supprimée.
+    - code inline avec marqueur (ex. "x = 1  # EXPORT\\n") : marqueur
+      retiré, code conservé ("x = 1\\n").
+    """
+    out: list[str] = []
+    for line in lines:
+        if EXPORT_MARKER not in line:
+            out.append(line)
+            continue
+        stripped = line.lstrip()
+        if stripped.startswith("#"):
+            continue
+        # code inline : coupe le commentaire à partir du premier '#'
+        hash_idx = line.find("#")
+        code_part = line[:hash_idx].rstrip()
+        if not code_part:
+            continue
+        newline = "\n" if line.endswith("\n") else ""
+        out.append(code_part + newline)
+    return out
 def clear_cell(cell: dict) -> None:
     cell["outputs"] = []
     if "execution_count" in cell:
@@ -45,7 +70,7 @@ def filter_cells(cells: list[dict]) -> list[dict]:
         if not cell_kept(cell):
             continue
         if cell.get("cell_type") == "code":
-            cell["source"] = truncate_skip(as_lines(cell))
+            cell["source"] = strip_export(truncate_skip(as_lines(cell)))
             clear_cell(cell)
         kept.append(cell)
     return kept
@@ -87,6 +112,10 @@ def insert_clear_button(nb: dict, notebook_rel: str) -> None:
 
 
 def treat_data(nb: dict, rel: str | None, with_button: bool) -> dict:
+    if with_button and has_clear_button(nb):
+        # déjà traité (EXPORT déjà retirés) : ne pas refiltrer, sinon les
+        # cellules gardées seraient supprimées au 2e passage.
+        return nb
     nb["cells"] = filter_cells(nb.get("cells", []))
     if with_button and rel is not None:
         insert_clear_button(nb, rel)

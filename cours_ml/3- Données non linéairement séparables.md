@@ -1,7 +1,7 @@
 ---
-titre: "04 - Données non linéairement séparables"
+titre: 3 - Données non linéairement séparables
 cours: "[[Entrypoint]]"
-partie: 4
+partie: 3
 statut: draft
 Contexte: |-
   4e année post-bac, 18h au total.
