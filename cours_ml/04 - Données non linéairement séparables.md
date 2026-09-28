@@ -28,7 +28,6 @@ Or beaucoup de problèmes ne ressemblent pas à ça :
 > - **XOR** : $(0,0) \to -1$, $(1,1) \to -1$, $(0,1) \to +1$, $(1,0) \to +1$. Aucune droite ne sépare les $+1$ des $-1$ (voir `03-exemple-XOR`).
 > - **Cercles concentriques** : centre $-1$, anneau $+1$. Il faudrait un cercle, pas une droite.
 
-Preuve rapide pour XOR : une droite qui met $(0,0)$ et $(1,1)$ du côté $-1$ met forcément $(0,1)$ ou $(1,0)$ du même côté par convexité. Le côté $-1$ d'une droite est convexe, or l'ensemble $\{(0,0),(1,1)\}$ a pour enveloppe convexe le segment qui passe par $(0.5,0.5)$, incompatible avec $\{(0,1),(1,0)\}$.
 
 > [!note] À retenir
 > L'échec n'est pas un bug d'optimisation. C'est le **modèle** qui est trop pauvre. Il faut enrichir la représentation, pas changer $\eta$.

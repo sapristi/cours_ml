@@ -62,9 +62,9 @@ Le principe est le suivant:
 
 
 ### [!faq] Exercice 4
-Ajouter une méthode `learn` à la classe `Perceptron`, qui prends en entrée un vecteur d'apprentissage, la cible, et le pas d'apprentissage, et mets à jour les poids du perceptron (une étape d'apprentissage).
+Ajouter une méthode `learn` à la classe `Perceptron`, qui prends en entrée un vecteur d'apprentissage, la cible, et mets à jour les poids du perceptron (une étape d'apprentissage). On prendra une valeur fixe pour le pas d'apprentissage, par exemple $r=0.1$.
 
-Vérifier que la méthode fonctionne correctement sur les entrées suivantes. On pourra utiliser les fonctions fournies pour afficher le
+Vérifier que la méthode fonctionne correctement sur les entrées suivantes. On pourra utiliser les fonctions fournies pour afficher le perceptron et les données d'apprentissage (voir la page https://sapristi.github.io/cours_ml).
 
 **Entrée 1**
 
@@ -92,4 +92,20 @@ Vérifier que la méthode fonctionne correctement sur les entrées suivantes. On
 | -1.5 | -1   | 0   |
 | -1   | -0.6 | 0   |
 | -0.5 | 0    | 0   |
+
+**Entrée 4**
+
+| x1  | x2  | t   |
+| --- | --- | --- |
+| 1   | 1   | 0   |
+| 1   | 0   | 1   |
+| 0   | 1   | 1   |
+| 0   | 0   | 0   |
+Que remarque-t-on sur cette entrée ?
+
+
 ### [!faq] Exercice 5
+Implémenter une méthode `train`, qui prends un entrée un jeu de données d'entrainement, et entraîne le perceptron.
+
+### [!faq] Exercice 6
+Généraliser l'implémentation du perceptron à une dimension quelconque grace à numpy.
