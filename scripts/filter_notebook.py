@@ -69,7 +69,9 @@ def insert_clear_button(nb: dict, notebook_rel: str) -> None:
         f'let t = e.target.result.transaction(tables, "readwrite");'
         f'function clearNotenook(tablename) {{'
         f't.objectStore(tablename).delete(\'{notebook_rel}\').onsuccess = function(e) {{'
-        f'console.log("Deleted {notebook_rel} state in " + tablename);}}}};}}}};</script>'
+        f'console.log("Deleted {notebook_rel} state in " + tablename + " (" + e.target.result + ")");}}}};'
+        f'for (let tablename of tables) {{ clearNotenook(tablename); }}'
+        f'}}}}}};</script>'
     )
     cell_source = (
         "from IPython.display import display, HTML\n"
