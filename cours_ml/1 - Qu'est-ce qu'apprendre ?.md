@@ -75,71 +75,26 @@ On entraîne le modèle sur des données pour lesquelles on ne sait pas quelle e
 > - Globalement moins performant que l'apprentissage supervisé
 > - Ne nécessite pas de données labellisées (qui coûtent cher)
 
-# 3. Apprentissage supervisé : par cœur vs généraliser
+# 3. Apprentissage supervisé : tentative de généralisation
 
-## 3.1 Apprendre par cœur
 
-- Exemple : table de correspondance mémorisée.
-  - Erreur nulle sur les exemples vus.
-  - Incapable de répondre sur un exemple jamais vu.
-- En ML : un modèle trop flexible peut faire du « par cœur ».
-  - Ex : polynôme de degré 50 qui passe par 51 points.
 
-> [!example] Exemple
-> Un étudiant apprend un contrôle en mémorisant les corrigés sans comprendre.
+![[Pasted image 20260928145826.png|398]]
 
+## 3.1 Apprendre par cœur VS généraliser
+
+> [!example] À compléter en tâche 2
+> Contenu polynômes.
 
 ## 3.2 Qu'est-ce que généraliser ?
 
-- **Généraliser** = être bon sur des données **nouvelles**, issues du même phénomène.
-- Formalisation minimale :
-  - Données d'apprentissage : $D_{train} = \{(x_i, y_i)\}_{i=1}^{n}$.
-  - Erreur empirique : performance sur $D_{train}$.
-  - Erreur vraie (risque) : performance moyenne sur de futures données.
-  - Objectif : erreur vraie faible, pas seulement erreur empirique faible.
+> [!info] À compléter en tâche 2
+> Définition train/test.
 
-> [!info] Point clé
-> On ne mesure la généralisation que sur des données **non vues** pendant l'entraînement.
+## 3.3 Comment valider sans se mentir ? (hold-out)
 
-
-TODO:
-- divers exemples d'interpolation, à partir d'un même ensemble de points:
-	- linéaire, approximative.
-	- diverses solutions exactes, mais d'allure différente.
-![[Pasted image 20260928145826.png|398]]
-
-## 3.3 Quelles validations théoriques et pratiques ?
-
-Essentiel à ce stade (détaillé en parties 4 et 7) :
-
-1. **Séparation train / test**
-   - On réserve une partie des données pour tester.
-   - C'est la mesure empirique de la généralisation.
-
-2. **Idée théorique à admettre**
-   - Si le modèle est simple par rapport au nombre d'exemples, erreur train $\approx$ erreur vraie.
-   - Si le modèle est trop complexe, écart possible très grand.
-   - D'où le dilemme : modèle trop simple = sous-apprentissage, trop complexe = surapprentissage.
-
-3. **Conséquence pratique**
-   - Plus de données + modèle de complexité contrôlée = meilleure généralisation.
-   - Ne jamais choisir un modèle uniquement sur l'erreur train.
-
-> [!note] Vocabulaire à fixer
-> - **Hypothèse / modèle** : la fonction $f$ choisie dans une famille.
-> - **Erreur empirique / train** : sur données vues.
-> - **Erreur test / généralisation** : sur données nouvelles.
-
-
+> [!danger] À compléter en tâche 2
+> Protocole.
 
 ---
-
-# 4. Réseaux de neurone
-
-## À retenir pour la suite
-
-1. Le cours = surtout **supervisé**.
-2. Apprendre $\neq$ mémoriser. Objectif = **généraliser**.
-3. Train $\neq$ test. On juge sur du non-vu.
-4. Deux types d'apprentissage: Classification ($y$ discret) vs régression ($y$ continu).
 
