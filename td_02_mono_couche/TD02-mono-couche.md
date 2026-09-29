@@ -10,7 +10,7 @@ Contexte: |-
 ---
 
 > [!abstract] Objectif
-> Passer d'un neurone a une couche de 3 perceptrons : `argmax(W.x+b)`, Rosenblatt multi-classes, visualisation des 3 droites, echec controle, bonus lettres 5x5.
+> Passer d'un neurone a une couche de 3 perceptrons : `argmax(W.x+b)`, Rosenblatt multi-classes, lire fond `argmax` vs pointilles `h_k=0`, echec controle piege central, bonus actif lettres 5x5 (lire `W`, courbe robustesse).
 
 # 1. Couche mono-couche
 
@@ -39,12 +39,21 @@ Completer `predict`, `learn_one`, `train` dans `mono_couche.ipynb` (cellule clas
 # 2. Blobs + piege
 
 ### [!faq] Exercice 2 — Succes separable
-Entrainer, tracer `plot_frontieres`. Pourquoi regions convexes ?
+Entrainer, tracer `plot_frontieres`. Fond colore = vraie decision `argmax`, pointilles = `h_k=0` (indicatif, pas frontiere). Pourquoi regions convexes ?
 
 > [!danger] Exercice 3 — Piege central
-> Ajouter `X_dur`. Constater oscillation, <100%. Lien avec XOR du TD01 ? Pourquoi aucun `W` ne marche ?
+> Ajouter `X_dur`. Trouver un pointille qui traverse une zone uniforme : que concluez-vous ? Constater oscillation, <100%. Lien avec XOR du TD01 ? Pourquoi aucun `W` ne marche ?
 
-# 3. Bonus lettres
+# 3. Bonus actif lettres
 
-### [!faq] Exercice 4 — A/B/C en 5x5
-Reutiliser la meme classe en 25D. Visualiser `W` en 5x5. Tester flip 5 px. Lien surapprentissage [[3- Données non linéairement séparables]] §4 ?
+### [!faq] Exercice 4 — Predire via scores `h`
+Coder `enc` + `gen_lettres`, entrainer en 25D. Afficher une lettre bruitee avec `show_lettre` : lire `h0,h1,h2`, retrouver `argmax`.
+
+### [!faq] Exercice 5 — Lire `W` en 5x5
+Afficher templates vs `W` appris. Associer chaque `W_k` a A/B/C, justifier (pixels discriminants B vs C). Pourquoi `W` flou ?
+
+### [!faq] Exercice 6 — Courbe robustesse
+Coder boucle `n_flip` 0..8, tracer accuracy. Sous quel flip passe sous 80% ? Pourquoi chute ? Lien surapprentissage [[3- Données non linéairement séparables]] §4 ?
+
+> [!danger] Exercice 7 — Synthese
+> Pourquoi meme modele OK en 25D lettres mais KO piege 2D ? Reponse : separabilite lineaire, pas dimension. Prepare TD03.
