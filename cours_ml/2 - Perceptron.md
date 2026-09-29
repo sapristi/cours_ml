@@ -47,6 +47,7 @@ Quelle serait le problème si on n'avait pas introduit le *biais* (poids $w_0$) 
 ### [!faq] Exercice 3
 Implémenter en python un tel neurone, à l'aide d'une classe `Perceptron`.
 
+
 # 2. Apprentissage
 
 Afin de faire en sorte que le neurone puisse apprendre, nous allons utiliser un algorithme qui va faire évoluer les poids, à l'aide de données d'entrainement.

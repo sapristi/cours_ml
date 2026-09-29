@@ -1,0 +1,89 @@
+<h2>Quel problème pour mono-couche multi-sorties ?</h2>
+<p class="subtitle">3 options visualisées — architecture commune : 2 entrées → 3 sorties, argmax, sans couche cachée</p>
+
+<div class="cards">
+  <div class="card" data-choice="blobs" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <svg viewBox="0 0 200 150" width="100%" height="140" style="background:#f8f9fa;border-radius:8px">
+        <!-- frontières linéaires -->
+        <line x1="100" y1="0" x2="100" y2="150" stroke="#999" stroke-dasharray="5,3" stroke-width="2"/>
+        <line x1="0" y1="90" x2="200" y2="60" stroke="#999" stroke-dasharray="5,3" stroke-width="2"/>
+        <!-- blob 1 bleu bas-gauche -->
+        <g fill="#3b82f6">
+          <circle cx="50" cy="110" r="5"/><circle cx="65" cy="105" r="5"/><circle cx="45" cy="95" r="5"/><circle cx="60" cy="120" r="5"/><circle cx="70" cy="115" r="5"/>
+        </g>
+        <!-- blob 2 vert bas-droit -->
+        <g fill="#22c55e">
+          <circle cx="150" cy="110" r="5"/><circle cx="135" cy="105" r="5"/><circle cx="155" cy="95" r="5"/><circle cx="140" cy="120" r="5"/><circle cx="165" cy="115" r="5"/>
+        </g>
+        <!-- blob 3 orange haut -->
+        <g fill="#f97316">
+          <circle cx="100" cy="30" r="5"/><circle cx="85" cy="40" r="5"/><circle cx="115" cy="40" r="5"/><circle cx="100" cy="50" r="5"/><circle cx="110" cy="25" r="5"/>
+        </g>
+        <!-- piège central rouge -->
+        <g fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="3,2">
+          <ellipse cx="100" cy="85" rx="18" ry="12"/>
+        </g>
+        <text x="100" y="145" text-anchor="middle" font-size="10" fill="#666">3 blobs + piège central</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>A — 3 blobs 2D (reco)</h3>
+      <p>Séparable → succès, puis blob central → échec contrôlé. Frontières = droites, visu directe.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="iris" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <svg viewBox="0 0 200 150" width="100%" height="140" style="background:#f8f9fa;border-radius:8px">
+        <text x="10" y="15" font-size="10" fill="#666">longueur pétale / sépale</text>
+        <g fill="#3b82f6"><circle cx="40" cy="100" r="4"/><circle cx="50" cy="95" r="4"/><circle cx="45" cy="105" r="4"/></g>
+        <g fill="#22c55e"><circle cx="110" cy="70" r="4"/><circle cx="120" cy="65" r="4"/><circle cx="115" cy="75" r="4"/><circle cx="125" cy="72" r="4"/></g>
+        <g fill="#f97316"><circle cx="130" cy="55" r="4"/><circle cx="140" cy="50" r="4"/><circle cx="135" cy="60" r="4"/><circle cx="145" cy="58" r="4"/></g>
+        <line x1="80" y1="130" x2="80" y2="20" stroke="#999" stroke-dasharray="5,3" stroke-width="2"/>
+        <text x="60" y="145" font-size="10" fill="#3b82f6">setosa OK</text>
+        <text x="110" y="145" font-size="10" fill="#ef4444">versi/virgi mélangés</text>
+      </svg>
+    </div>
+    <div class="card-body">
+      <h3>B — Iris réel (bonus)</h3>
+      <p>150 fleurs, 4 mesures, 3 espèces. Setosa OK, 2 autres confondues. Concret mais 4D.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="lettres" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="display:flex;gap:12px;justify-content:center;background:#f8f9fa;border-radius:8px;padding:12px">
+        <div style="display:grid;grid-template-columns:repeat(5,12px);gap:2px">
+          <div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div>
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#333"></div>
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div>
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#333"></div>
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#333"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,12px);gap:2px">
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div>
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div>
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div>
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div>
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(5,12px);gap:2px">
+          <div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div>
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div>
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div>
+          <div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#ddd"></div>
+          <div style="width:12px;height:12px;background:#ddd"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#333"></div><div style="width:12px;height:12px;background:#ddd"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Lettres 5×5</h3>
+      <p>25 entrées → 3 sorties (A/B/C). Historique, fun, mais sans visu géométrique.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+<p class="subtitle">Clique pour indiquer ta préférence, et réponds dans le terminal : on part sur A en cœur + B en bonus ?</p>
+</div>
