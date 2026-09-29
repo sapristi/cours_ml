@@ -104,5 +104,8 @@ On entraîne le modèle sur des données pour lesquelles on ne sait pas quelle e
 > Le test ne sert pas à régler le modèle, sinon il devient du train déguisé.
 > Suite : complexité et courbe en U en [[3- Données non linéairement séparables#4. Complexification des modèles et impact sur la généralisation|partie 4]], validation croisée et surapprentissage en partie 7.
 
+> [!question] Pourquoi 100% sur le train ne prouve rien ?
+> Donnez un contre-exemple de modèle par cœur (table de mémorisation ou polynôme degré 15) qui a 0 erreur train mais échoue sur test. Que faudrait-il mesurer pour trancher ?
+
 ---
 
