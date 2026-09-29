@@ -83,18 +83,26 @@ On entraîne le modèle sur des données pour lesquelles on ne sait pas quelle e
 
 ## 3.1 Apprendre par cœur VS généraliser
 
-> [!example] À compléter en tâche 2
-> Contenu polynômes.
+> [!example] Par cœur vs tendance (régression polynomiale)
+> - Mêmes points bruités autour d'une courbe douce.
+> - Degré 1 : rate partout (sous-apprentissage).
+> - Degré 4 environ : capte la tendance, petite erreur train stable.
+> - Degré 15 : passe par tous les points, erreur train = 0 mais zigzague au moindre bruit = par cœur.
+> Retenir : erreur train 0 ne prouve rien, c'est même suspect.
 
 ## 3.2 Qu'est-ce que généraliser ?
 
-> [!info] À compléter en tâche 2
-> Définition train/test.
+> [!info] Généraliser = être bon sur du non-vu
+> Généraliser = erreur faible sur des données **non vues** à l'entraînement.
+> Vocabulaire : **erreur train** (sur données d'entraînement) vs **erreur test** (sur données gardées de côté, split train/test).
+> Schéma : train -> entraîne, test verrouillé -> juge.
 
 ## 3.3 Comment valider sans se mentir ? (hold-out)
 
-> [!danger] À compléter en tâche 2
-> Protocole.
+> [!danger] Ne jamais juger sur le train seul
+> Protocole hold-out : 1) couper le jeu en train/test, 2) entraîner sur train seul, 3) mesurer une fois sur test verrouillé.
+> Le test ne sert pas à régler le modèle, sinon il devient du train déguisé.
+> Suite : complexité et courbe en U en [[3- Données non linéairement séparables#4. Complexification des modèles et impact sur la généralisation|partie 4]], validation croisée et surapprentissage en partie 7.
 
 ---
 
