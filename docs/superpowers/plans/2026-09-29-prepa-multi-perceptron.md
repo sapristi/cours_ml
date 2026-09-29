@@ -42,9 +42,9 @@ def gen_blobs(n=25, sigma=0.6, seed=0):
         y_list += [k]*n
     return np.vstack(X_list), np.array(y_list)
 
-# 3 perceptrons factices (poids imposés pour le test)
+# 3 perceptrons factices (poids imposés pour le test, vérifiés par exécution)
 W = np.array([[1.0, 0.5], [-1.0, 0.5], [0.0, -1.0]])
-b = np.array([0.5, 0.5, 1.0])
+b = np.array([-0.5, -0.5, -0.5])
 
 def predict_liste_equiv(x):
     h = W @ x + b
@@ -57,20 +57,20 @@ def predict_vect(x):
 X, y = gen_blobs()
 for xi in X:
     assert np.array_equal(predict_liste_equiv(xi), predict_vect(xi)), xi
-# points ambiguïté imposés : doivent exhiber [1,1,0] et [0,0,0] avec ces poids
+# points ambiguïté imposés (vérifiés par exécution) : [0,0,0] aucun gagnant, [1,1,0] deux gagnants
 amb1 = np.array([0.0, 0.0])
-amb2 = np.array([0.0, -5.0])
+amb2 = np.array([0.0, 2.0])
 print("ex 0,0 ->", predict_vect(amb1).tolist())
-print("ex 0,-5 ->", predict_vect(amb2).tolist())
-assert predict_vect(amb1).tolist() == [1, 1, 0], predict_vect(amb1)
-assert predict_vect(amb2).tolist() == [0, 0, 0], predict_vect(amb2)
+print("ex 0,2 ->", predict_vect(amb2).tolist())
+assert predict_vect(amb1).tolist() == [0, 0, 0], predict_vect(amb1)
+assert predict_vect(amb2).tolist() == [1, 1, 0], predict_vect(amb2)
 print("EQUIV OK")
 ```
 
 - [ ] **Step 2: Run verification script**
 
 Run: `python /tmp/opencode/prepa_check_equiv.py`
-Expected: `EQUIV OK` avec les deux lignes `ex 0,0 -> [1, 1, 0]` et `ex 0,-5 -> [0, 0, 0]`
+Expected: `EQUIV OK` avec les deux lignes `ex 0,0 -> [0, 0, 0]` et `ex 0,2 -> [1, 1, 0]`
 
 - [ ] **Step 3: Commit (rien à commiter, script jetable)**
 
@@ -144,12 +144,12 @@ def predict_liste(x: np.ndarray, perceptrons: list) -> np.ndarray:
     return np.array([p.output(x) for p in perceptrons], dtype=int)
 
 perceptrons = [
-    Perceptron(w=np.array([1.0, 0.5]), b=0.5),
-    Perceptron(w=np.array([-1.0, 0.5]), b=0.5),
-    Perceptron(w=np.array([0.0, -1.0]), b=1.0),
+    Perceptron(w=np.array([1.0, 0.5]), b=-0.5),
+    Perceptron(w=np.array([-1.0, 0.5]), b=-0.5),
+    Perceptron(w=np.array([0.0, -1.0]), b=-0.5),
 ]
 print(predict_liste(np.array([0.0, 0.0]), perceptrons))
-print(predict_liste(np.array([0.0, -5.0]), perceptrons))
+print(predict_liste(np.array([0.0, 2.0]), perceptrons))
 ```
 
 Cell 6 (markdown) :
@@ -170,12 +170,12 @@ def predict_vect(x: np.ndarray, W: np.ndarray, b: np.ndarray) -> np.ndarray:
     return (h >= 0).astype(int)
 
 W = np.array([[1.0, 0.5], [-1.0, 0.5], [0.0, -1.0]])
-b = np.array([0.5, 0.5, 1.0])
+b = np.array([-0.5, -0.5, -0.5])
 for xi in X_train:
     assert np.array_equal(predict_liste(xi, perceptrons), predict_vect(xi, W, b))
 print("boucle == matrice OK")
 print(predict_vect(np.array([0.0, 0.0]), W, b))
-print(predict_vect(np.array([0.0, -5.0]), W, b))
+print(predict_vect(np.array([0.0, 2.0]), W, b))
 ```
 
 Cell 8 (markdown) :
