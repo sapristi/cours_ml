@@ -1,6 +1,6 @@
 {
   "LiteBuildConfig": {
-    "contents": ["td_01_perceptron/perceptron.ipynb"],
+    "contents": ["td_01_perceptron/perceptron.ipynb", "td_02_mono_couche/mono_couche_corrige.ipynb"],
     "output_dir": "dist"
   },
   "PyodideLockAddon": {
