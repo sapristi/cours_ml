@@ -1,4 +1,4 @@
-"""Filtre EXPORT/SKIP pour notebooks étudiants.
+"""Filtre BEGIN/END + clear outputs pour notebooks étudiants.
 
 Local:  python scripts/filter_notebook.py corrige.ipynb perceptron.ipynb
 CI:     python scripts/filter_notebook.py --in-place dist/files/
@@ -8,9 +8,9 @@ import argparse
 import json
 import sys
 from pathlib import Path
-EXPORT_MARKER = "EXPORT"
-SKIP_MARKER = "SKIP"
-TODO_LINE = "# TODO\n"
+BEGIN_MARKER = "# BEGIN"
+END_MARKER = "# END"
+TODO = "# TODO"
 def source_text(cell: dict) -> str:
     src = cell.get("source", "")
     if isinstance(src, list):
@@ -21,45 +21,26 @@ def as_lines(cell: dict) -> list[str]:
     if isinstance(src, list):
         return list(src)
     return src.splitlines(keepends=True)
-def cell_kept(cell: dict) -> bool:
-    if cell.get("cell_type") != "code":
-        return True
-    return EXPORT_MARKER in source_text(cell)
-def truncate_skip(lines: list[str]) -> list[str]:
+def truncate_blocks(lines: list[str]) -> list[str]:
     out: list[str] = []
+    skipping = False
     for line in lines:
-        if SKIP_MARKER in line:
-            out.append(TODO_LINE)
-            break
+        if not skipping and BEGIN_MARKER in line:
+            indent = line[: len(line) - len(line.lstrip())]
+            newline = "\n" if line.endswith("\n") else ""
+            out.append(indent + TODO + newline)
+            out.append(indent + "pass" + newline)
+            skipping = True
+            continue
+        if skipping and END_MARKER in line:
+            skipping = False
+            continue
+        if skipping:
+            continue
         out.append(line)
-    else:
-        return out
     return out
 
 
-def strip_export(lines: list[str]) -> list[str]:
-    """Enlève les lignes marqueurs # EXPORT du notebook exporté.
-
-    - ligne pure commentaire contenant EXPORT (ex. "# EXPORT\\n") : supprimée.
-    - code inline avec marqueur (ex. "x = 1  # EXPORT\\n") : marqueur
-      retiré, code conservé ("x = 1\\n").
-    """
-    out: list[str] = []
-    for line in lines:
-        if EXPORT_MARKER not in line:
-            out.append(line)
-            continue
-        stripped = line.lstrip()
-        if stripped.startswith("#"):
-            continue
-        # code inline : coupe le commentaire à partir du premier '#'
-        hash_idx = line.find("#")
-        code_part = line[:hash_idx].rstrip()
-        if not code_part:
-            continue
-        newline = "\n" if line.endswith("\n") else ""
-        out.append(code_part + newline)
-    return out
 def clear_cell(cell: dict) -> None:
     cell["outputs"] = []
     if "execution_count" in cell:
@@ -67,10 +48,8 @@ def clear_cell(cell: dict) -> None:
 def filter_cells(cells: list[dict]) -> list[dict]:
     kept: list[dict] = []
     for cell in cells:
-        if not cell_kept(cell):
-            continue
         if cell.get("cell_type") == "code":
-            cell["source"] = strip_export(truncate_skip(as_lines(cell)))
+            cell["source"] = truncate_blocks(as_lines(cell))
             clear_cell(cell)
         kept.append(cell)
     return kept
@@ -113,8 +92,7 @@ def insert_clear_button(nb: dict, notebook_rel: str) -> None:
 
 def treat_data(nb: dict, rel: str | None, with_button: bool) -> dict:
     if with_button and has_clear_button(nb):
-        # déjà traité (EXPORT déjà retirés) : ne pas refiltrer, sinon les
-        # cellules gardées seraient supprimées au 2e passage.
+        # déjà traité : ne pas refiltrer (idempotence) ni réinsérer le bouton.
         return nb
     nb["cells"] = filter_cells(nb.get("cells", []))
     if with_button and rel is not None:
@@ -137,7 +115,7 @@ def iter_notebooks(root: Path):
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(description="Filtre EXPORT/SKIP + clear outputs.")
+    p = argparse.ArgumentParser(description="Filtre BEGIN/END + clear outputs.")
     p.add_argument("src", nargs="?", help="notebook source (mode fichier)")
     p.add_argument("dst", nargs="?", help="notebook destination (mode fichier)")
     p.add_argument("--in-place", dest="in_place", default=None, help="dossier à traiter sur place (CI)")
