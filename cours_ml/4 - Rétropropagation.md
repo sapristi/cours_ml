@@ -1,21 +1,24 @@
 
 # 1. Notations
-![[Pasted image 20260930145724.png]]
-Vecteur d'entrée: $X = \begin{pmatrix} x_1 & x_2 & \dots & x_n   \end{pmatrix}$
+![[Pasted image 20260930182302.png]]
+
+Vecteur d'entrée: $X = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}$
 
 Matrice des poids de la 1ᵉ colonne de neurones: 
-![[Pasted image 20260930152903.png|281]]
+![[Pasted image 20260930185304.png|261]]
+
 
 
 <!-- $W^1 = \begin{pmatrix} w_{1,1} & w_{1,2} & \dots & w_{1,n} \\  w_{2,1} & w_{2,2} & \dots & w_{2,n} \\ & &\dots \\ w_{n,1} & w_{n,2} & \dots & w_{n,n} \\ \end{pmatrix}$ -->
 
 
-On appelle $Z_1 = X W_1$, et $Y_1 = A(Z_1)$ où $A$ est la fonction d'activation. Pour chaque neurone $i$ de la 1ᵉ colonne, on a 
-$$  z_i^1 =  \sum_{j=1}^1 x_j w_{j,i}  $$
+
+On appelle $Z_1 = W_1 X$, et $Y_1 = A(Z_1)$ où $A$ est la fonction d'activation. Pour chaque neurone $i$ de la 1ᵉ colonne, on a 
+$$  z_i^1 =  \sum_{j=1}^n w_{i,j}\, x_j  $$
 
 Pour la deuxième rangée, on remplace $X$ par $Y_1$, ce qui donne:
-$$Z^2 = Y^1 W^2$$
-$$Y_2 = A(Z_2) = A(Y_1 W_2)$$
+$$Z_2 = W_2 Y_1$$
+$$Y_2 = A(Z_2) = A(W_2 Y_1)$$
 
 Et ainsi de suite...
 
@@ -40,28 +43,28 @@ On utilisera la fonction de coût: $C(Y) = \frac{1}{2}(Y - T)^2$, et donc $C'(Y)
 On a
 $$
 \begin{eqnarray}
-Y &=& A(XW) \\
-E &=& C(Y) = C(A(XW))
+Y &=& A(WX) \\
+E &=& C(Y) = C(A(WX))
 \end{eqnarray}
 $$
 et donc
 $$\begin{eqnarray}
-\frac{dE}{dW} &=& C'(Y)\cdot A'(XW) \cdot X\\
-\frac{dE}{dW} &=& (Y - T)\cdot A'(XW) \cdot X\\
+\frac{dE}{dW} &=& C'(Y)\cdot A'(WX) \cdot X^T\\
+\frac{dE}{dW} &=& (Y - T)\cdot A'(WX) \cdot X^T\\
 \end{eqnarray}$$
 ### 2.2.2 Calcul pour deux couches de neurones
 
 On a  
 $$
 \begin{eqnarray}
-Y_1 &=& A(X  W_1) \\
-Y_2 &=& A(Y_1 W_2) \\
+Y_1 &=& A(W_1 X) \\
+Y_2 &=& A(W_2 Y_1) \\
 E &=& C(Y_2)
 \end{eqnarray}
 $$
 Pour la dérivée en $W_2$, on est dans la même situation qu'au dessus:
 $$\begin{eqnarray}
-\frac{dE}{dW_2} &=& (Y_2 - T) \cdot A'(Y_1 W_2) \cdot Y_1 \\
+\frac{dE}{dW_2} &=& (Y_2 - T) \cdot A'(W_2 Y_1) \cdot Y_1^T \\
 \end{eqnarray}$$
 
 Pour la dérivée en $W_1$, il faut pousser un peu plus loin:
@@ -73,38 +76,38 @@ $$\begin{eqnarray}
 Or
 
 $$\begin{eqnarray}
-\frac{dY_2}{dW_1} &=& \frac{dA(Y_1W_2)}{dW_1} = A'(Y_1W_2) \cdot \frac{dY_1W_2}{dW_1} \\
-\frac{dY_2}{dW_1}  &=& A'(Y_1W_2) \cdot W_2 \cdot \frac{dY_1}{dW_1} \\
+\frac{dY_2}{dW_1} &=& \frac{dA(W_2Y_1)}{dW_1} = A'(W_2Y_1) \cdot \frac{dW_2Y_1}{dW_1} \\
+\frac{dY_2}{dW_1}  &=& A'(W_2Y_1) \cdot W_2 \cdot \frac{dY_1}{dW_1} \\
 \end{eqnarray}$$
 
 Et 
 
 $$\begin{eqnarray}
-\frac{dY_1}{dW_1} &=& \frac{dA(X  W_1)}{dW_1}\\
-\frac{dY_1}{dW_1}  &=& A'(XW_1) \cdot X \\
+\frac{dY_1}{dW_1} &=& \frac{dA(W_1 X)}{dW_1}\\
+\frac{dY_1}{dW_1}  &=& A'(W_1 X) \cdot X^T \\
 \end{eqnarray}$$
 d'où
 
 
 $$\begin{eqnarray}
 \frac{dE}{dW_1} &=& C'(Y_2)\cdot \frac{dY_2}{dW_1}\\
-\frac{dE}{dW_1} &=& (Y_2 - T)\cdot A'(Y_1W_2)\cdot W_2 \cdot \frac{dY_1}{dW_1}\\
-\frac{dE}{dW_1} &=& (Y_2 - T)\cdot A'(Y_1W_2)\cdot W_2 \cdot A'(XW_1) \cdot X\\
+\frac{dE}{dW_1} &=& (Y_2 - T)\cdot A'(W_2Y_1)\cdot W_2 \cdot \frac{dY_1}{dW_1}\\
+\frac{dE}{dW_1} &=& (Y_2 - T)\cdot A'(W_2Y_1)\cdot W_2 \cdot A'(W_1 X) \cdot X^T\\
 \end{eqnarray}$$
 
 ## 2.3 Généralisation à `n` couches
 
 
-On note $Z_n = Y_{n-1}W_n$ ( avec $Y_0 = X$)
+On note $Z_n = W_n Y_{n-1}$ ( avec $Y_0 = X$)
 
 $$\begin{eqnarray}
-\frac{dE}{dW_n} &=& (Y_n - T)\cdot A'(Z_n) \cdot Y_{n-1}\\
-\frac{dE}{dW_{n-1}} &=& (Y_n - T)\cdot A'(Z_n) \cdot W_{n} \cdot A'(Z_{n-1}) \cdot Y_{n-2}\\
-\frac{dE}{dW_{n-2}} &=& (Y_n - T)\cdot A'(Z_n) \cdot W_{n} \cdot A'(Z_{n-1}) \cdot W_{n-1} \cdot A'(Z_{n-2}) \cdot Y_{n-3}\\
+\frac{dE}{dW_n} &=& (Y_n - T)\cdot A'(Z_n) \cdot Y_{n-1}^T\\
+\frac{dE}{dW_{n-1}} &=& (Y_n - T)\cdot A'(Z_n) \cdot W_{n} \cdot A'(Z_{n-1}) \cdot Y_{n-2}^T\\
+\frac{dE}{dW_{n-2}} &=& (Y_n - T)\cdot A'(Z_n) \cdot W_{n} \cdot A'(Z_{n-1}) \cdot W_{n-1} \cdot A'(Z_{n-2}) \cdot Y_{n-3}^T\\
 
 \frac{dE}{dW_{n-i}} &=& 
 (Y_n - T)\cdot A'(Z_n) \cdot W_{n}  \dots 
 A'(Z_{n-i+1}) \cdot W_{n-i+1}
-A'(Z_{n-i}) \cdot Y_{n-i-1}\\
+A'(Z_{n-i}) \cdot Y_{n-i-1}^T\\
 \end{eqnarray}$$
 
