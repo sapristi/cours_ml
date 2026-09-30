@@ -21,10 +21,16 @@ Et ainsi de suite...
 
 # 2. Rétro-propagation
 
+## 2.1 Principe
+
 Le mécanisme de rétro-propagation fonctionne de la manière suivante: 
 Pour chaque couche de neurone, on va modifier les poids en considérant la contribution des poids dans la dérivée de la fonction d'erreur.
 
-## 2.1 Principe
+Notons $E$ l'erreur de sortie du réseau. On peut exprimer cette erreur de sortie comme une fonction des poids du réseau:
+$$E = f(W_1,W_2, ..., W_n)$$
+La mise à jour des poids fonctionne de la manière suivante:
+$$\Delta W_i = \eta \cdot \frac{df}{dWi}$$
+Ainsi, il va falloir calculer les dérivées partielles de la fonction d'erreur suivant chacun des poids du réseau.
 
 ## 2.2 Calcul des coefficients
 
