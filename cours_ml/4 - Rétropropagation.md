@@ -116,7 +116,7 @@ A'(Z_{n-i}) \cdot Y_{n-i-1}^T\\
 
 ## 3.1 Motivation
 
-La règle de mise à jour du §2.1 ne prend en compte que le gradient **courant** : chaque poids est déplacé proportionnellement à $$\frac{\partial E}{\partial W_i}$$
+La règle de mise à jour du §2.1 ne prend en compte que le gradient **courant** : chaque poids est déplacé proportionnellement à $\frac{\partial E}{\partial W_i}$
 Dans les « vallées » étroites de la surface d'erreur, le gradient oscille d'un bord à l'autre : la descente avance en **zigzag** et converge lentement. Augmenter le pas d'apprentissage ne fait qu'amplifier les oscillations, jusqu'à diverger.
 
 ## 3.2 Principe
@@ -151,3 +151,43 @@ $$v \leftarrow \mu\, v + \eta\,\frac{\partial E}{\partial W}, \qquad W \leftarro
 
 > [!info] Ce que ça ne change pas
 > L'élan ne modifie **ni** le calcul du gradient (§2) **ni** sa forme : il change seulement la façon de l'utiliser pour mettre à jour les poids. C'est un hyperparamètre de plus ($\mu$) à régler.
+
+# 4. Convention ligne
+
+Tout le cours utilise la convention **colonne** : $X$ est un vecteur colonne et la matrice des poids est à gauche, $Z = W X$. C'est la convention la plus simple pour les dérivations du §2.
+
+Le notebook `mlp.ipynb`, lui, range les échantillons en **lignes** (numpy : un batch $X$ est de forme $(N, d)$). On y écrit donc $Z = X W^T$, la matrice des poids à droite. Les calculs sont identiques, seules les transposées changent de côté.
+
+## 4.1 Passe avant
+
+- $X$ : batch de forme $(N, d)$ (une ligne = un échantillon).
+- $W_l$ : matrice $(n_{out}, n_{in})$ ; $b_l$ : biais $(n_{out},)$.
+- $Y_0 = X$, puis pour chaque couche $l$ :
+  $$Z_l = Y_{l-1} W_l^T + b_l, \qquad Y_l = A(Z_l)$$
+
+  (la couche de sortie utilise $A_o$).
+
+## 4.2 Passe arrière
+
+$\delta_l$ est la **sensibilité** de la couche $l$ : la dérivée du coût par rapport aux pré-activations $Z_l$. Pour un échantillon, c'est un **vecteur ligne** $(1, n_{out})$, dont la composante $k$ vaut $\delta_{l,k} = \frac{\partial E}{\partial z_{l,k}}$ (de combien bouge $E$ quand on perturbe la pré-activation du neurone $k$). On note $\delta_l^{(i)}$ le delta de l'échantillon $i$.
+
+$$\begin{eqnarray}
+\delta_L &=& (Y - T) \odot A_o'(Z_L) \\
+\\
+\delta_l &=& (\delta_{l+1} \, W_{l+1}) \odot A'(Z_l)
+\end{eqnarray}$$
+Les delta à appliquer pour la backpropagation sont alors les suivants:
+$$\frac{\partial E}{\partial W_l} = \frac{1}{N}\,\delta_l^T Y_{l-1}, \qquad \frac{\partial E}{\partial b_l} = \frac{1}{N}\sum_{i=1}^{N} \delta_l^{(i)}$$
+
+La somme porte sur les échantillons $i$ uniquement (pas sur les composantes) : le résultat garde la forme d'un vecteur ligne $(1, n_{out})$, identique à $b_l$. 
+
+## 4.3 Différence avec la colonne
+
+| | Colonne (§2) | Ligne (§4) |
+|---|---|---|
+| entrée | $X$ colonne $(n, 1)$ | $X$ ligne $(1, n)$ |
+| passe avant | $Z = W X$ | $Z = X W^T$ |
+| récursion | $\delta_l = (W_{l+1}^T \delta_{l+1}) \odot A'(Z_l)$ | $\delta_l = (\delta_{l+1} W_{l+1}) \odot A'(Z_l)$ |
+| gradient | $\frac{\partial E}{\partial W_l} = \delta_l Y_{l-1}^T$ | $\frac{\partial E}{\partial W_l} = \delta_l^T Y_{l-1}$ |
+
+La transposée « passe » du facteur de droite ($X^T$) au facteur de gauche ($\delta^T$), et dans la récursion de $W_{l+1}^T$ (colonne) à $W_{l+1}$ (ligne).
