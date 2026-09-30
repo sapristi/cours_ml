@@ -32,12 +32,12 @@ Pour chaque couche de neurone, on va modifier les poids en considérant la contr
 Notons $E$ l'erreur de sortie du réseau. On peut exprimer cette erreur de sortie comme une fonction des poids du réseau:
 $$E = f(W_1,W_2, ..., W_n)$$
 La mise à jour des poids fonctionne de la manière suivante:
-$$\Delta W_i = \eta \cdot \frac{df}{dWi}$$
+$$\Delta W_i = - \eta \cdot \frac{\partial E}{\partial W_i}$$
 Ainsi, il va falloir calculer les dérivées partielles de la fonction d'erreur suivant chacun des poids du réseau.
 
 ## 2.2 Calcul des coefficients
 
-On utilisera la fonction de coût: $C(Y) = \frac{1}{2}(Y - T)^2$, et donc $C'(Y) = Y - T$
+On utilisera la fonction de coût: $C(Y) = \frac{1}{2}(Y - T)^2$, et donc $C'(Y) = Y - T$. On note $\odot$ le produit terme à terme (Hadamard) entre deux vecteurs.
 
 ### 2.2.1 Calcul pour une couche de neurones
 On a
@@ -49,8 +49,8 @@ E &=& C(Y) = C(A(WX))
 $$
 et donc
 $$\begin{eqnarray}
-\frac{dE}{dW} &=& C'(Y)\cdot A'(WX) \cdot X^T\\
-\frac{dE}{dW} &=& (Y - T)\cdot A'(WX) \cdot X^T\\
+\frac{dE}{dW} &=& C'(Y) \odot A'(WX) \cdot X^T\\
+\frac{dE}{dW} &=& (Y - T) \odot A'(WX) \cdot X^T\\
 \end{eqnarray}$$
 ### 2.2.2 Calcul pour deux couches de neurones
 
@@ -64,7 +64,7 @@ E &=& C(Y_2)
 $$
 Pour la dérivée en $W_2$, on est dans la même situation qu'au dessus:
 $$\begin{eqnarray}
-\frac{dE}{dW_2} &=& (Y_2 - T) \cdot A'(W_2 Y_1) \cdot Y_1^T \\
+\frac{dE}{dW_2} &=& (Y_2 - T) \odot A'(W_2 Y_1) \cdot Y_1^T \\
 \end{eqnarray}$$
 
 Pour la dérivée en $W_1$, il faut pousser un peu plus loin:
@@ -91,8 +91,8 @@ d'où
 
 $$\begin{eqnarray}
 \frac{dE}{dW_1} &=& C'(Y_2)\cdot \frac{dY_2}{dW_1}\\
-\frac{dE}{dW_1} &=& (Y_2 - T)\cdot A'(W_2Y_1)\cdot W_2 \cdot \frac{dY_1}{dW_1}\\
-\frac{dE}{dW_1} &=& (Y_2 - T)\cdot A'(W_2Y_1)\cdot W_2 \cdot A'(W_1 X) \cdot X^T\\
+\frac{dE}{dW_1} &=& (Y_2 - T) \odot A'(W_2Y_1)\cdot W_2 \cdot \frac{dY_1}{dW_1}\\
+\frac{dE}{dW_1} &=& (Y_2 - T) \odot A'(W_2Y_1)\cdot W_2 \cdot A'(W_1 X) \cdot X^T\\
 \end{eqnarray}$$
 
 ## 2.3 Généralisation à `n` couches
@@ -101,12 +101,12 @@ $$\begin{eqnarray}
 On note $Z_n = W_n Y_{n-1}$ ( avec $Y_0 = X$)
 
 $$\begin{eqnarray}
-\frac{dE}{dW_n} &=& (Y_n - T)\cdot A'(Z_n) \cdot Y_{n-1}^T\\
-\frac{dE}{dW_{n-1}} &=& (Y_n - T)\cdot A'(Z_n) \cdot W_{n} \cdot A'(Z_{n-1}) \cdot Y_{n-2}^T\\
-\frac{dE}{dW_{n-2}} &=& (Y_n - T)\cdot A'(Z_n) \cdot W_{n} \cdot A'(Z_{n-1}) \cdot W_{n-1} \cdot A'(Z_{n-2}) \cdot Y_{n-3}^T\\
+\frac{dE}{dW_n} &=& (Y_n - T) \odot A'(Z_n) \cdot Y_{n-1}^T\\
+\frac{dE}{dW_{n-1}} &=& (Y_n - T) \odot A'(Z_n) \cdot W_{n} \cdot A'(Z_{n-1}) \cdot Y_{n-2}^T\\
+\frac{dE}{dW_{n-2}} &=& (Y_n - T) \odot A'(Z_n) \cdot W_{n} \cdot A'(Z_{n-1}) \cdot W_{n-1} \cdot A'(Z_{n-2}) \cdot Y_{n-3}^T\\
 
 \frac{dE}{dW_{n-i}} &=& 
-(Y_n - T)\cdot A'(Z_n) \cdot W_{n}  \dots 
+(Y_n - T) \odot A'(Z_n) \cdot W_{n}  \dots 
 A'(Z_{n-i+1}) \cdot W_{n-i+1}
 A'(Z_{n-i}) \cdot Y_{n-i-1}^T\\
 \end{eqnarray}$$
