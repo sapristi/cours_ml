@@ -111,3 +111,43 @@ A'(Z_{n-i+1}) \cdot W_{n-i+1}
 A'(Z_{n-i}) \cdot Y_{n-i-1}^T\\
 \end{eqnarray}$$
 
+
+# 3. Élan
+
+## 3.1 Motivation
+
+La règle de mise à jour du §2.1 ne prend en compte que le gradient **courant** : chaque poids est déplacé proportionnellement à $$\frac{\partial E}{\partial W_i}$$
+Dans les « vallées » étroites de la surface d'erreur, le gradient oscille d'un bord à l'autre : la descente avance en **zigzag** et converge lentement. Augmenter le pas d'apprentissage ne fait qu'amplifier les oscillations, jusqu'à diverger.
+
+## 3.2 Principe
+
+L'**élan** (momentum) consiste à accumuler une **vitesse** $v$ et à déplacer les poids selon cette vitesse plutôt que selon le gradient brut. Le gradient ne modifie plus directement $W$, il modifie la vitesse :
+
+$$v \leftarrow \mu\, v + \eta\,\frac{\partial E}{\partial W}, \qquad W \leftarrow W - v$$
+
+- $\eta$ : pas d'apprentissage (le même qu'au §2.1) ;
+- $\mu \in [0,1)$ : coefficient d'élan, typiquement $0.9$ ;
+- $v$ : vitesse, même forme que $W$, initialisée à $0$.
+
+> [!note] Cas particulier
+> $\mu = 0$ redonne exactement la descente de gradient classique : $v = \eta\,\frac{\partial E}{\partial W}$, donc $W \leftarrow W - \eta\,\frac{\partial E}{\partial W}$.
+
+## 3.3 Pourquoi ça accélère
+
+La vitesse est une moyenne pondérée des gradients passés :
+
+$$v^{(t)} = \eta \sum_{k=0}^{t-1} \mu^{k}\, \frac{\partial E}{\partial W}^{(t-k)}$$
+
+- Les composantes du gradient qui gardent le même signe **s'accumulent** : on accélère le long de la vallée.
+- Les composantes qui oscillent d'un bord à l'autre **se compensent** : le zigzag est amorti.
+
+Image : une bille qui roule. La gravité (le gradient) l'accélère, l'inertie ($\mu$) l'empêche de changer brusquement de direction.
+
+## 3.4 En pratique
+
+On garde en mémoire une vitesse par paramètre (en plus des poids) et, à chaque étape, on remplace la mise à jour directe par :
+
+$$v \leftarrow \mu\, v + \eta\,\frac{\partial E}{\partial W}, \qquad W \leftarrow W - v$$
+
+> [!info] Ce que ça ne change pas
+> L'élan ne modifie **ni** le calcul du gradient (§2) **ni** sa forme : il change seulement la façon de l'utiliser pour mettre à jour les poids. C'est un hyperparamètre de plus ($\mu$) à régler.
