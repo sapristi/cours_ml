@@ -1,70 +1,52 @@
 {
   "main": {
-    "id": "0fa10006c0f637b9",
+    "id": "f992fe7c78936a24",
     "type": "split",
     "children": [
       {
-        "id": "a04561dd077225e6",
+        "id": "ea8106af4cac8f4d",
         "type": "tabs",
         "children": [
           {
-            "id": "5f6468813b637858",
+            "id": "0728fbe9ab5366cd",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "cours_ml/Entrypoint.md",
-                "mode": "preview",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Entrypoint"
-            }
-          },
-          {
-            "id": "3666996ab536d3e2",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "cours_ml/4 - Rétropropagation.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "4 - Rétropropagation"
-            }
-          },
-          {
-            "id": "1283783e83430c0a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "cours_ml/4 - Rétropropagation.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "4 - Rétropropagation"
+              "title": "Nouvel onglet"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "cb7d34136aec956a",
+    "id": "67cb4dffa2290183",
     "type": "split",
     "children": [
       {
-        "id": "e2c43d435aec00d6",
+        "id": "60a944b0b7c01468",
         "type": "tabs",
         "children": [
           {
-            "id": "7bd88d7f6eedb143",
+            "id": "da0bf837cd40010e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorateur de fichiers"
+            }
+          },
+          {
+            "id": "bd57eea3a5cdd2a1",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -81,7 +63,7 @@
             }
           },
           {
-            "id": "a73886c051fba171",
+            "id": "6fd0014c5a4bb26d",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -92,44 +74,27 @@
               "icon": "lucide-bookmark",
               "title": "Signets"
             }
-          },
-          {
-            "id": "47ae5ae84dd2e048",
-            "type": "leaf",
-            "state": {
-              "type": "file-explorer",
-              "state": {
-                "sortOrder": "alphabetical",
-                "autoReveal": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-folder-closed",
-              "title": "Explorateur de fichiers"
-            }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "horizontal",
     "width": 300
   },
   "right": {
-    "id": "242318bc7d715ae3",
+    "id": "3c79231d6dc7bc6b",
     "type": "split",
     "children": [
       {
-        "id": "5c66219a9cfa2286",
+        "id": "00b7278212f3990d",
         "type": "tabs",
         "children": [
           {
-            "id": "b01c44411a45fa7b",
+            "id": "6e8ee42657fe2951",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "04 - Données non linéairement séparables.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -143,12 +108,11 @@
             }
           },
           {
-            "id": "f4f40d96b88977e9",
+            "id": "1d362aabf5e7e375",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "04 - Données non linéairement séparables.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -157,7 +121,7 @@
             }
           },
           {
-            "id": "fbb64cecbe6bada8",
+            "id": "d1f31230e6d68a86",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -172,7 +136,7 @@
             }
           },
           {
-            "id": "a70434b6f250a024",
+            "id": "d20ed0aa17de71bc",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -186,31 +150,17 @@
             }
           },
           {
-            "id": "93c3232cd5f1b275",
+            "id": "22985d2a2a262c5c",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "04 - Données non linéairement séparables.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
               "title": "Plan"
-            }
-          },
-          {
-            "id": "53f45dc28737eea6",
-            "type": "leaf",
-            "state": {
-              "type": "callout-studio-occurrences",
-              "state": {
-                "ids": [],
-                "allTypes": true
-              },
-              "icon": "callout-studio-statistics",
-              "title": "Trouver des callouts"
             }
           }
         ]
@@ -222,7 +172,6 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "callout-studio:Insertion rapide d'un callout de bloc": false,
       "switcher:Ouvrir le sélecteur rapide": false,
       "graph:Ouvrir la vue graphique": false,
       "canvas:Créer une nouvelle toile": false,
@@ -232,53 +181,8 @@
       "bases:Créer une nouvelle base": false
     }
   },
-  "active": "1283783e83430c0a",
+  "active": "0728fbe9ab5366cd",
   "lastOpenFiles": [
-    "td_03_backpropagation/mlp-Copy1.ipynb",
-    "td_03_backpropagation/mlp-Copy2.ipynb",
-    "cours_ml/4 - Rétropropagation (convention ligne).md",
-    "cours_ml/4 - Rétropropagation.md",
-    "cours_ml/Entrypoint.md",
-    "td_04_rbf/knn_rbf.ipynb",
-    "td_04_rbf",
-    "docs/superpowers/plans/2026-09-30-td04-rbf-knn.md",
-    "docs/superpowers/specs/2026-09-30-td04-rbf-knn-design.md",
-    "README.md",
-    "Sans titre.md",
-    "cours_ml/assets/Pasted image 20260930141351.png",
-    "cours_ml/3- Données non linéairement séparables.md",
-    "td_03_backpropagation/mlp.ipynb",
-    "docs/superpowers/plans/2026-09-30-td03-mlp.md",
-    "cours_ml/assets/Pasted image 20260930185304.png",
-    "docs/superpowers/specs/2026-09-30-td03-mlp-design.md",
-    "td_02_mono_couche/mono_couche.ipynb",
-    "cours_ml/assets/Pasted image 20260930182302.png",
-    "cours_ml/assets/Pasted image 20260930152903.png",
-    "cours_ml/assets/Pasted image 20260930152734.png",
-    "cours_ml/assets/Pasted image 20260930145724.png",
-    "cours_ml/assets/Pasted image 20260930145336.png",
-    "td_03_backpropagation/backpropagation.ipynb",
-    "td_03_backpropagation/Untitled.ipynb",
-    "td_03_backpropagation",
-    "Untitled Folder",
-    "docs/superpowers/specs/2026-09-29-td02-bonus-lettres-design.md",
-    "td_02_mono_couche/prepa_multi_perceptron_corrige.ipynb",
-    "cours_ml/2 - Perceptron.md",
-    "docs/superpowers/plans/2026-09-29-prepa-multi-perceptron.md",
-    "docs/superpowers/specs/2026-09-29-prepa-multi-perceptron-design.md",
-    "td_02_mono_couche/TD02-mono-couche.md",
-    "docs/superpowers/plans/2026-09-29-td02-mono-couche.md",
-    "docs/superpowers/plans/2026-09-29-generalisation.md",
-    "docs/superpowers/specs/2026-09-29-td02-mono-couche-design.md",
-    "cours_ml/1 - Qu'est-ce qu'apprendre ?.md",
-    "docs/superpowers/specs/2026-09-29-generalisation-design.md",
-    "docs/superpowers/plans/2026-09-28-notebook-export-filter.md",
-    "cours_ml/03 - Classification et séparations linéaires.md",
-    "docs/superpowers/specs/2026-09-28-notebook-export-filter-design.md",
-    "dist/build/fa-solid-900.svg",
-    "dist/build/fa-regular-400.svg",
-    "dist/build/fa-brands-400.svg",
-    "cours_ml/TD.md",
-    "1 - Qu'est-ce qu'apprendre ?.md"
+    "Sans titre.base"
   ]
 }
