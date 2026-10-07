@@ -25,14 +25,14 @@ jobs:
           uv sync
       - name: Build the JupyterLite site
         run: |
-          uv run jupyter lite build --output-dir dist
+          uv run jupyter lite build
       - name: post-treatment
         run: |
-          uv run python scripts/prepare_notebooks.py --in-place dist/files/
+          uv run python scripts/prepare_notebooks.py --in-place .dist/files/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./.dist
 
   deploy:
     needs: build

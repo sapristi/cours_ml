@@ -8,7 +8,7 @@ Les commentaires écrits juste après ``# BEGIN`` deviennent le corps du TODO :
 Sans commentaire, le script émet ``# TODO`` + ``pass`` comme avant.
 
 Aperçu:  python scripts/prepare_notebooks.py corrige.ipynb apercu.ipynb
-CI:      python scripts/prepare_notebooks.py --in-place dist/files/
+CI:      python scripts/prepare_notebooks.py --in-place .dist/files/
 """
 from __future__ import annotations
 import argparse

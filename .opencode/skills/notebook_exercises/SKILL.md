@@ -7,7 +7,7 @@ description: Use when creating or editing a Jupyter notebook containing exercice
 
 ## Vue d'ensemble
 
-Un TD est un notebook Jupyter, source unique : le **corrigé** (solutions incluses), versionné dans le repo (`td_NN_<theme>/<theme>.ipynb`). Au build jupyterlite, `scripts/prepare_notebooks.py` produit la version **diffusée** (sans solutions) directement dans `dist/files/` : elle n'a pas vocation à être versionnée ailleurs.
+Un TD est un notebook Jupyter, source unique : le **corrigé** (solutions incluses), versionné dans le repo (`td/NN_<theme>.ipynb`). Au build jupyterlite, `scripts/prepare_notebooks.py` produit la version **diffusée** (sans solutions) directement dans `.dist/files/` : elle n'a pas vocation à être versionnée ailleurs.
 
 ## Interfacer avec `prepare_notebooks.py`
 
