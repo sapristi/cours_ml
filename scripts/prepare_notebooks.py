@@ -3,6 +3,10 @@
 Retire les solutions (blocs # BEGIN/# END → # TODO + pass), vide les outputs
 et insère le bouton « Clear notebook ».
 
+Les commentaires écrits juste après ``# BEGIN`` deviennent le corps du TODO :
+``# code`` est dé-commenté (devient du code), ``## indice`` garde un ``#``.
+Sans commentaire, le script émet ``# TODO`` + ``pass`` comme avant.
+
 Aperçu:  python scripts/prepare_notebooks.py corrige.ipynb apercu.ipynb
 CI:      python scripts/prepare_notebooks.py --in-place dist/files/
 """
@@ -24,23 +28,50 @@ def as_lines(cell: dict) -> list[str]:
     if isinstance(src, list):
         return list(src)
     return src.splitlines(keepends=True)
+def uncomment_line(line: str) -> tuple[str, bool]:
+    """Transforme une ligne de commentaire du corps du TODO.
+
+    ``# code`` → ``code`` (dé-commenté, devient du code) ; ``## indice`` →
+    ``# indice`` (conserve un ``#``). Renvoie ``(ligne, est_du_code)``.
+    """
+    indent = line[: len(line) - len(line.lstrip())]
+    content = line[len(indent):]
+    if content.startswith("##"):
+        return indent + content[1:], False
+    body = content[1:]
+    if body.startswith(" "):
+        body = body[1:]
+    return indent + body, True
+
+
 def truncate_blocks(lines: list[str]) -> list[str]:
     out: list[str] = []
-    skipping = False
-    for line in lines:
-        if not skipping and BEGIN_MARKER in line:
-            indent = line[: len(line) - len(line.lstrip())]
-            newline = "\n" if line.endswith("\n") else ""
-            out.append(indent + TODO + newline)
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        if BEGIN_MARKER not in line:
+            out.append(line)
+            i += 1
+            continue
+        indent = line[: len(line) - len(line.lstrip())]
+        newline = "\n" if line.endswith("\n") else ""
+        out.append(indent + TODO + newline)
+        i += 1
+        has_code = False
+        while i < len(lines):
+            nxt = lines[i]
+            if not nxt.lstrip().startswith("#") or END_MARKER in nxt:
+                break
+            emitted, is_code = uncomment_line(nxt)
+            out.append(emitted)
+            has_code = has_code or is_code
+            i += 1
+        if not has_code:
             out.append(indent + "pass" + newline)
-            skipping = True
-            continue
-        if skipping and END_MARKER in line:
-            skipping = False
-            continue
-        if skipping:
-            continue
-        out.append(line)
+        while i < len(lines) and END_MARKER not in lines[i]:
+            i += 1
+        if i < len(lines):
+            i += 1
     return out
 
 

@@ -5,15 +5,26 @@ Obsidian vault, pas un projet code.
 ## Conventions Obsidian
 
 - Liens/embeds wiki `[[...]]` / `![[...]]`, callouts `[!abstract]`, `[!info]`, `[!danger]`, `[!example]`, `[!note]`.
-- Frontmatter YAML strict (`---` blocs). `Contexte` multiligne avec `|-`.
+- Frontmatter YAML strict (`---` blocs). `Contexte` multiligne avec `|-`. (optionnel)
 
 # Organisation du repo
-- fichiers markdown pour le cours, interprétés par obsidian
-- dossier `scripts/` pour stocker des scripts utilitaires
+- `cours_ml/` : cours au format markdown (interprété par Obsidian). Fichiers `*.md` à la racine, figures dans `cours_ml/assets/`, scripts de génération de figures dans `cours_ml/scripts/`.
+- `td_XX_*/` : notebooks des travaux dirigés (un dossier par TD). Ce sont les **corrigés** (solutions incluses).
+- `scripts/` : scripts utilitaires du repo (ex. `prepare_notebooks.py`).
+- `dist/` : sortie du build JupyterLite (généré, ne pas éditer à la main).
+- `.github/workflows/` : CI (déploiement JupyterLite).
+- `pyproject.toml` + `uv.lock` : dépendances gérées avec `uv`.
+
+## Environnement Python
+Toujours lancer Python via `uv run` (jamais `python` directement) :
+
+```bash
+uv run python <script>.py
+```
 
 ## Préparation des notebooks pour la diffusion
 
-Les notebooks du repo sont les **corrigés** (solutions incluses). Au build jupyterlite, `scripts/prepare_notebooks.py` les prépare pour la diffusion : chaque bloc `# BEGIN … # END` est remplacé par `# TODO` + `pass`, les outputs sont vidés (`execution_count → None`).
+Les notebooks du repo sont les **corrigés** (solutions incluses). Au build jupyterlite, `scripts/prepare_notebooks.py` les prépare pour la diffusion.
 
 ### Aperçu local (fichier → fichier)
 

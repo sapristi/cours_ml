@@ -1,6 +1,6 @@
 ---
-name: td-jupyter
-description: Use when creating or editing a TD (travaux dirigés) Jupyter notebook for the machine learning course — writing exercices, solution code in # BEGIN/# END blocks, verification cells, or preparing notebooks for distribution with scripts/prepare_notebooks.py.
+name: notebook_exercises
+description: Use when creating or editing a Jupyter notebook containing exercices (typically TD "Travaux dirigés"n otebook), or preparing notebooks for distribution with scripts/prepare_notebooks.py.
 ---
 
 # TD Jupyter
@@ -11,7 +11,7 @@ Un TD est un notebook Jupyter, source unique : le **corrigé** (solutions inclus
 
 ## Interfacer avec `prepare_notebooks.py`
 
-Le script remplace chaque bloc `# BEGIN` … `# END` par `# TODO` + `pass`, vide les outputs et remet `execution_count` à `None`.
+Le script remplace chaque bloc `# BEGIN` … `# END` par `# TODO` + `pass`, vide les outputs et remet `execution_count` à `None`. Les commentaires écrits juste après `# BEGIN` deviennent le corps du TODO (voir « Corps du TODO »).
 
 ### Aperçu local (fichier → fichier)
 
@@ -20,14 +20,6 @@ uv run python scripts/prepare_notebooks.py <corrige>.ipynb <apercu>.ipynb
 ```
 
 Sert à prévisualiser ce que verra l'étudiant. Écrire l'aperçu hors du repo (ex. `/tmp/`) : ne jamais écraser le corrigé, ne pas versionner l'aperçu.
-
-### CI / in-place (dossier)
-
-```bash
-uv run python scripts/prepare_notebooks.py --in-place dist/files/
-```
-
-Parcourt `**/*.ipynb` (hors `.ipynb_checkpoints`), filtre sur place et insère le bouton « Clear notebook ». Idempotent : détecte le bouton existant et ne re-traite pas.
 
 ## Écrire un exercice
 
@@ -63,6 +55,36 @@ check_forward(m, X)
 - `# BEGIN` et `# END` sur leur **propre ligne**, dans des cellules de code uniquement.
 - Tout le code solution est entre les deux ; la ligne `# BEGIN` devient `# TODO` + `pass` à la préparation.
 - Le code « pédagogique » non solution (imports, fonctions de visualisation, fonctions de test) reste **hors** des blocs.
+
+### Corps du TODO
+
+Les commentaires écrits **immédiatement après** `# BEGIN` (avant la première ligne de code solution) deviennent le corps du `# TODO` dans la version diffusée :
+
+- `# <code>` → dé-commenté, devient du **code** (ex. `# raise NotImplementedError` → `raise NotImplementedError`).
+- `## <texte>` → garde un seul `#`, reste un **indice** (commentaire).
+
+```python
+def forward(self, X):
+    # BEGIN
+    # raise NotImplementedError
+    ## Indice : Z1 = Y0 @ W1.T + b1
+    Y0 = X
+    ...
+    # END
+```
+
+donne, une fois préparé :
+
+```python
+def forward(self, X):
+    # TODO
+    raise NotImplementedError
+    # Indice : Z1 = Y0 @ W1.T + b1
+```
+
+- Sans commentaire après `# BEGIN`, le script émet `# TODO` + `pass` comme avant.
+- Si seul des indices (`##`) sont présents, un `pass` est ajouté pour éviter un corps vide.
+- ⚠️ Tout commentaire en **première ligne** d'une solution sera dé-commenté : pour un commentaire ordinaire, écris-le avant `# BEGIN` ou utilise `##`.
 
 ## Erreurs courantes
 
