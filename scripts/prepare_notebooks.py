@@ -1,7 +1,10 @@
-"""Filtre BEGIN/END + clear outputs pour notebooks étudiants.
+"""Prépare les notebooks pour la diffusion (jupyterlite).
 
-Local:  python scripts/filter_notebook.py corrige.ipynb perceptron.ipynb
-CI:     python scripts/filter_notebook.py --in-place dist/files/
+Retire les solutions (blocs # BEGIN/# END → # TODO + pass), vide les outputs
+et insère le bouton « Clear notebook ».
+
+Aperçu:  python scripts/prepare_notebooks.py corrige.ipynb apercu.ipynb
+CI:      python scripts/prepare_notebooks.py --in-place dist/files/
 """
 from __future__ import annotations
 import argparse
@@ -115,7 +118,7 @@ def iter_notebooks(root: Path):
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(description="Filtre BEGIN/END + clear outputs.")
+    p = argparse.ArgumentParser(description="Prépare les notebooks pour la diffusion (BEGIN/END → TODO + clear outputs).")
     p.add_argument("src", nargs="?", help="notebook source (mode fichier)")
     p.add_argument("dst", nargs="?", help="notebook destination (mode fichier)")
     p.add_argument("--in-place", dest="in_place", default=None, help="dossier à traiter sur place (CI)")

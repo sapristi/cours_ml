@@ -14,10 +14,8 @@ Ainsi, tout se passe en dimension 1, et l'on évite les considérations matricie
 
 ### 1.1.1 Sortie de chaque couche
 Pour chaque couche $l$ du réseau, on a
-$$\begin{eqnarray}
-z_{l} &=& y_{l-1} \cdot w_l\\
-y_{l} &=& a(z_{l})\\
-\end{eqnarray}$$
+$$\begin{eqnarray}z_{l+1} &=& y_l \cdot w_{l+1}\\
+y_{l+1} &=& a(z_{l+1})\end{eqnarray}$$
 (avec $y_0 = x$).
 
 ### 1.1.2 Fonction d'erreur
@@ -29,7 +27,7 @@ Soient
 
 On définit la fonction d'erreur $E$ comme:
 $$E= \frac{1}{2}(y-t)^2$$
-Nous voulons calculer les dérivées partielles de $E$ par rapport aux poids, pour chacun des poids $w_l$: $$\frac{\delta E}{\delta w_l}$$
+Nous voulons calculer les dérivées partielles de $E$ par rapport aux poids, pour chacun des poids $w_l$: $$\frac{\partial\ E}{\partial\ w_l}$$
 On définit la fonction $c(y) = \frac{1}{2}(y-t)^2$; on a $c'(y) = (y-t)$
 # 2. Calcul des dérivées partielles
 
@@ -43,10 +41,10 @@ E &=& c(y) = c(a(wx))
 $$
 et donc
 $$\begin{eqnarray}
-\frac{\delta E}{\delta w} &=& \frac{\delta \ c(y)}{\delta w}
-= \frac{\delta \ c(y)}{\delta y} \cdot \frac{\delta y}{\delta w}\\
-\frac{\delta E}{\delta w} &=& c'(y) \cdot \frac{\delta \ a(wx)}{\delta w} \\
-\frac{\delta E}{\delta w} &=& (y - t) \cdot a'(wx) \cdot x
+\frac{\partial\ E}{\partial\ w} &=& \frac{\partial\ c(y)}{\partial\ w}
+= \frac{\partial\ c(y)}{\partial\ y} \cdot \frac{\partial\ y}{\partial\ w}\\
+\frac{\partial\ E}{\partial\ w} &=& c'(y) \cdot \frac{\partial\ a(wx)}{\partial\ w} \\
+\frac{\partial\ E}{\partial\ w} &=& (y - t) \cdot a'(wx) \cdot x
 \end{eqnarray}$$
 ## 2.2 Calcul pour un réseau à deux couches
 
@@ -60,58 +58,58 @@ E &=& c(y_2)
 $$
 ### 2.2.1 Dérivée en $w_2$
 
-Pour la dérivée en $w_2$, on est dans la même situation qu'au dessus, en remplaçant $x$ par $y_1$:
+Pour la dérivée en $w_2$, on est dans la même situation qu'au-dessus, en remplaçant $x$ par $y_1$:
 $$\begin{eqnarray}
-\frac{\delta E}{\delta w_2} &=& (y_2 - t) \cdot a'(w_2 y_1) \cdot y_1 \\
+\frac{\partial\ E}{\partial\ w_2} &=& (y_2 - t) \cdot a'(w_2 y_1) \cdot y_1 \\
 \end{eqnarray}$$
 ### 2.2.2 Dérivée en $w_1$
 Pour la dérivée en $w_1$, il faut pousser un peu plus loin:
 
 $$\begin{eqnarray}
-\frac{\delta E}{\delta w_1} &=& \frac{\delta\ c(y_2)}{\delta\ w_1} = c'(y_2)\cdot \frac{\delta y_2}{\delta w_1}\\
-\frac{\delta E}{\delta w_1} &=& (y_2 - t) \cdot \frac{\delta y_2}{\delta w_1} \\
+\frac{\partial\ E}{\partial\ w_1} &=& \frac{\partial\ c(y_2)}{\partial\ w_1} = c'(y_2)\cdot \frac{\partial\ y_2}{\partial\ w_1}\\
+\frac{\partial\ E}{\partial\ w_1} &=& (y_2 - t) \cdot \frac{\partial\ y_2}{\partial\ w_1} \\
 \end{eqnarray}$$
 
 Or
 $$\begin{eqnarray}
-\frac{\delta y_2}{\delta w_1} &=& \frac{\delta \ a(w_2y_1)}{\delta w_1} = a'(w_2y_1) \cdot \frac{\delta \ w_2y_1}{\delta w_1} \\
-\frac{\delta y_2}{\delta w_1}  &=& a'(w_2y_1) \cdot w_2 \cdot \frac{\delta y_1}{\delta w_1} \\
+\frac{\partial\ y_2}{\partial\ w_1} &=& \frac{\partial\ a(w_2y_1)}{\partial\ w_1} = a'(w_2y_1) \cdot \frac{\partial\ w_2y_1}{\partial\ w_1} \\
+\frac{\partial\ y_2}{\partial\ w_1}  &=& a'(w_2y_1) \cdot w_2 \cdot \frac{\partial\ y_1}{\partial\ w_1} \\
 \end{eqnarray}$$
 
 Et 
 
 $$\begin{eqnarray}
-\frac{\delta y_1}{\delta w_1} &=& \frac{\delta \ a(w_1 x)}{\delta w_1}\\
-\frac{\delta y_1}{\delta w_1}  &=& a'(w_1 x) \cdot x \\
+\frac{\partial\ y_1}{\partial\ w_1} &=& \frac{\partial\ a(w_1 x)}{\partial\ w_1}\\
+\frac{\partial\ y_1}{\partial\ w_1}  &=& a'(w_1 x) \cdot x \\
 \end{eqnarray}$$
 d'où
 
 
 $$\begin{eqnarray}
-\frac{\delta E}{\delta w_1} &=& (y_2 - t)\cdot \frac{\delta y_2}{\delta w_1}\\
-\frac{\delta E}{\delta w_1} &=& (y_2 - t) \cdot a'(w_2y_1)\cdot w_2 \cdot \frac{\delta y_1}{\delta w_1}\\
-\frac{\delta E}{\delta w_1} &=& (y_2 - t) \cdot a'(w_2y_1)\cdot w_2 \cdot a'(w_1 x) \cdot x\\
+\frac{\partial\ E}{\partial\ w_1} &=& (y_2 - t)\cdot \frac{\partial\ y_2}{\partial\ w_1}\\
+\frac{\partial\ E}{\partial\ w_1} &=& (y_2 - t) \cdot a'(w_2y_1)\cdot w_2 \cdot \frac{\partial\ y_1}{\partial\ w_1}\\
+\frac{\partial\ E}{\partial\ w_1} &=& (y_2 - t) \cdot a'(w_2y_1)\cdot w_2 \cdot a'(w_1 x) \cdot x\\
 \end{eqnarray}$$
 ### 2.2.3 Conclusion
 Nous avons donc:
 $$\begin{eqnarray}
-\frac{\delta E}{\delta w_2} &=& (y_2 - t) \cdot a'(w_2 y_1) \cdot y_1 \\
-\frac{\delta E}{\delta w_1} &=& (y_2 - t) \cdot a'(w_2y_1)\cdot w_2 \cdot a'(w_1 x) \cdot x\\
+\frac{\partial\ E}{\partial\ w_2} &=& (y_2 - t) \cdot a'(w_2 y_1) \cdot y_1 \\
+\frac{\partial\ E}{\partial\ w_1} &=& (y_2 - t) \cdot a'(w_2y_1)\cdot w_2 \cdot a'(w_1 x) \cdot x\\
 \end{eqnarray}$$
-Nous pouvons remarquer un terme commun $(y_2 - t) \cdot a'(w_2 y_1)$ entre ceux deux expressions. 
+Nous pouvons remarquer un terme commun $(y_2 - t) \cdot a'(w_2 y_1)$ entre ces deux expressions. 
 
 # 3. Formule générale pour un réseau à $L$ couches
 
 En continuant les calculs dans le cas d'un réseau à $L$ couches, on obtiendrait
 
 $$\begin{eqnarray}
-\frac{\delta E}{\delta w_L} &=& (y_L - t) \cdot a'(z_L) \cdot y_{L-1}\\
-\frac{\delta E}{\delta w_{L-1}} &=& (y_L - t) \cdot a'(z_L) \cdot w_{L} \cdot a'(z_{L-1}) \cdot y_{L-2}\\
-\frac{\delta E}{\delta w_{L-2}} &=& (y_L - t) \cdot a'(z_n) \cdot w_{L} \cdot a'(z_{L-1}) \cdot w_{L-1} \cdot a'(z_{L-2}) \cdot y_{L-3}\\
+\frac{\partial\ E}{\partial\ w_L} &=& (y_L - t) \cdot a'(z_L) \cdot y_{L-1}\\
+\frac{\partial\ E}{\partial\ w_{L-1}} &=& (y_L - t) \cdot a'(z_L) \cdot w_{L} \cdot a'(z_{L-1}) \cdot y_{L-2}\\
+\frac{\partial\ E}{\partial\ w_{L-2}} &=& (y_L - t) \cdot a'(z_L) \cdot w_{L} \cdot a'(z_{L-1}) \cdot w_{L-1} \cdot a'(z_{L-2}) \cdot y_{L-3}\\
 \\
 \dots\\
 \\
-\frac{\delta E}{\delta w_{L-i}} &=& 
+\frac{\partial\ E}{\partial\ w_{L-i}} &=& 
 (y_L - t) \cdot a'(z_L) \cdot w_{L}  \dots 
 a'(z_{L-i+1}) \cdot w_{L-i+1}
 a'(z_{L-i}) \cdot y_{L-i-1}\\
@@ -123,4 +121,4 @@ $$\begin{eqnarray}
 \delta_{l-1} &=& \delta_l \cdot w_l \cdot  a'(z_{l-1}) 
 \end{eqnarray}$$
 on peut calculer chacune des dérivées partielles avec 
-$$\frac{\delta E}{\delta w_l} = \delta_l \cdot y_{l-1}$$
+$$\frac{\partial\ E}{\partial\ w_l} = \delta_l \cdot y_{l-1}$$

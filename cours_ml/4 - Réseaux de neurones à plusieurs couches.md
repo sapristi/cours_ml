@@ -39,13 +39,13 @@ On définit la fonction d'erreur $E$ comme:
 $$E= \frac{1}{2}(y-t)^2$$
 On va alors appliquer la méthode de descente de gradient à $E$, vue comme étant une fonction des poids:
 $$\begin{eqnarray}
-w_{l} ← w_{l} - \eta\cdot \frac{\delta E}{\delta w_l} \\
+w_{l} ← w_{l} - \eta\cdot \frac{\partial E}{\partial w_l} \\
 \end{eqnarray}$$
 où 
-- $\frac{\delta E}{\delta w_l}$ est la dérivée partielle de $E$ par rapport à $w_l$. 
+- $\frac{\partial E}{\partial w_l}$ est la dérivée partielle de $E$ par rapport à $w_l$. 
 - $\eta$ est un paramètre appelé *taux d'apprentissage* ($0 < \eta \le 1$) 
 
-Nous allons donc devoir calculer ces dérivées partielles. Voir l'[annexe](obsidian://open?vault=machine_learning&file=cours_ml%2F4%20-%20R%C3%A9seaux%20de%20neurones%20%C3%A0%20plusieurs%20couches) pour le détail des calculs.
+Nous allons donc devoir calculer ces dérivées partielles. Voir [[Annexe 1 - Calcul des dérivées partielles]] pour le détail des calculs.
 
 ### 2.2.2 Conclusion
 
@@ -55,10 +55,10 @@ $$\begin{eqnarray}
 \delta_{l-1} &=& \delta_l \cdot w_l \cdot  a'(z_{l-1}) 
 \end{eqnarray}$$
 on peut calculer chacune des dérivées partielles avec 
-$$\frac{\delta E}{\delta w_l} = \delta_l \cdot y_{l-1}$$
+$$\frac{\partial E}{\partial w_l} = \delta_l \cdot y_{l-1}$$
 La mise à jour des poids s'obtient enfin en appliquant pour chaque couche $l$ (où $\eta$ est le taux d'apprentissage):
 $$\begin{eqnarray}
-w_{l} ← w_{l} - \eta\cdot \frac{\delta E}{\delta w_l} \\
+w_{l} ← w_{l} - \eta\cdot \frac{\partial E}{\partial w_l} \\
 \end{eqnarray}$$
 
 > [!info] Le calcul des $\delta_l$ s'effectue de la couche $L$ à la couche $1$, d'où le nom de « passe arrière » ( *backward* en anglais)
@@ -67,7 +67,7 @@ w_{l} ← w_{l} - \eta\cdot \frac{\delta E}{\delta w_l} \\
 # 3. Couches à plusieurs neurones
 ## 3.1 Conventions matricielles
 
-Afin d'accélérer les calculs avec `numpy`, nous utiliserons les convention suivante:
+Afin d'accélérer les calculs avec `numpy`, nous utiliserons les conventions suivantes:
 - On dispose de $N$ vecteurs d'entrée sous forme de ligne, que nous regroupons en une matrice $X$. $d$ est la dimension de l'entrée.
    ![[Pasted image 20261002120039.png|center|183]]
 - Chaque ligne de la matrice de poids $W$ contient les poids d'un neurone 
@@ -76,7 +76,7 @@ Afin d'accélérer les calculs avec `numpy`, nous utiliserons les convention sui
 $$\begin{eqnarray}Z &=& X \cdot W^T + b\\
 Y &=& A(Z)\end{eqnarray} $$
 
-Note: le biais $b$ est un vecteur ligne; $X \cdot W^T + b$ signifie qu'on l'ajoute $b$ à chaque ligne de la matrice $X \cdot W^T$.
+Note: le biais $b$ est un vecteur ligne; $X \cdot W^T + b$ signifie qu'on ajoute $b$ à chaque ligne de la matrice $X \cdot W^T$.
 <!-- $$W = \begin{pmatrix}
 w_{1,1} & w_{1,2} & \dots & w_{1,d} \\  
 w_{2,1} & w_{2,2} & \dots & w_{2,d} \\ 
@@ -101,24 +101,24 @@ $$\begin{eqnarray}
 \end{eqnarray}$$
 Les dérivées partielles de $E$ par rapport aux $W_l$ / $b_l$ s'écrivent:
 $$\begin{eqnarray}
-\frac{\delta E}{\delta W_l} &=& \frac{1}{N} \delta_l^T \cdot Y_{l-1}\\
-\frac{\delta E}{\delta b_l} &=& \frac{1}{N} \sum_{i=1}^N \delta_l^{(i)} \\
+\frac{\partial E}{\partial W_l} &=& \frac{1}{N} \delta_l^T \cdot Y_{l-1}\\
+\frac{\partial E}{\partial b_l} &=& \frac{1}{N} \sum_{i=1}^N \delta_l^{(i)} \\
 \end{eqnarray}$$
 
 où 
-- $N$ est le nombre de d'échantillons d'entrainement (i.e. le nombre de lignes dans la matrice d'entrée $X$).
-- $\delta_l^{(i)}$ est la $i^{eme}$ ligne de la matrice $\delta_l$; pour obtenir $\frac{\delta E}{\delta b_l}$ on additionne les lignes de $\delta_l$, afin d'obtenir une unique ligne.
+- $N$ est le nombre d'échantillons d'entrainement (i.e. le nombre de lignes dans la matrice d'entrée $X$).
+- $\delta_l^{(i)}$ est la $i^{\text{ème}}$ ligne de la matrice $\delta_l$; pour obtenir $\frac{\partial E}{\partial b_l}$ on additionne les lignes de $\delta_l$, afin d'obtenir une unique ligne.
 
 La mise à jour des poids s'obtient enfin en appliquant pour chaque couche $l$:
 $$\begin{eqnarray}
-W_{l} &=&W_{l} - \eta \frac{\delta E}{\delta W_l} \\
-b_l &=&b_l -  \eta\frac{\delta E}{\delta b_l}\\
+W_{l} &=&W_{l} - \eta \frac{\partial E}{\partial W_l} \\
+b_l &=&b_l -  \eta\frac{\partial E}{\partial b_l}\\
 \end{eqnarray}$$
 # 4. Élan
 
 ## 4.1 Motivation
 
-La règle de mise à jour ne prend en compte que le gradient **courant** : chaque poids est déplacé proportionnellement à $\frac{\partial E}{\partial W_i}$
+La règle de mise à jour ne prend en compte que le gradient **courant** : chaque poids est déplacé proportionnellement à $\frac{\partial E}{\partial W_l}$
 Dans les « vallées » étroites de la surface d'erreur, le gradient oscille d'un bord à l'autre : la descente avance en **zigzag** et converge lentement. 
 
 ## 4.2 Principe
