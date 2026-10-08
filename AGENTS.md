@@ -4,8 +4,27 @@ Obsidian vault, pas un projet code.
 
 ## Conventions Obsidian
 
+**À appliquer uniquement quand un fichier markdown est édité, pas un notebook .ipynb**
+
 - Liens/embeds wiki `[[...]]` / `![[...]]`, callouts `[!abstract]`, `[!info]`, `[!danger]`, `[!example]`, `[!note]`.
 - Frontmatter YAML strict (`---` blocs). `Contexte` multiligne avec `|-`. (optionnel)
+
+## Standards de notation (notebooks)
+
+On distingue soigneusement la **cible** (ce qu'il faut prédire) de la **sortie** (ce que le modèle prédit). Conventions alignées sur le cours :
+
+| Concept | Minuscule (scalaire/vecteur) | Majuscule (matrice) |
+|---|---|---|
+| Entrée | `x` | `X` (un échantillon par ligne, forme (N, d)) |
+| **Cible (target)** | `t` | `T` (cibles one-hot, notation mathématique) |
+| **Sortie / prédiction** | `y` | `Y` (activations d'une couche, sortie du réseau) |
+| Pré-activation | `z` | `Z` |
+| Poids / biais | `w`, `b` | `W`, `b` |
+| Activation | `a` | `A` |
+| Coût / erreur rétropropagée | `E`, `δ` | — |
+| Taux d'apprentissage | `r` (perceptron), `η` (multi-couche) | `lr` en code |
+
+Règle clé : la **cible** se note toujours `t` (jamais `y`) ; `y` est réservé à la **sortie** du modèle.
 
 # Organisation du repo
 - `cours_ml/` : cours au format markdown (interprété par Obsidian). Fichiers `*.md` à la racine, figures dans `cours_ml/assets/`, scripts de génération de figures dans `cours_ml/scripts/`.

@@ -9,6 +9,14 @@ description: Use when creating or editing a Jupyter notebook containing exercice
 
 Un TD est un notebook Jupyter, source unique : le **corrigé** (solutions incluses), versionné dans le repo (`td/NN_<theme>.ipynb`). Au build jupyterlite, `scripts/prepare_notebooks.py` produit la version **diffusée** (sans solutions) directement dans `.dist/files/` : elle n'a pas vocation à être versionnée ailleurs.
 
+## Structure du notebook
+
+Le notebook se découpe en **sections** de niveau `##`, une par **cas d'étude** (ex. « 1. Étude en 2D », « 2. Étude en 25D »), chacune subdivisée en **sous-sections numérotées** de niveau `###` (`1.1`, `1.2`, …).
+
+- **Intro / préambule** : sections `##` dédiées, non numérotées (ex. `## Objectif`, `## Préambule`).
+- **Conclusion** : section `##` dédiée, non numérotée, en fin de notebook (si pertinent).
+- Les blocs d'aide (vérification `#### Vérification de …`, figures) sont des sous-niveaux `####` rattachés à leur sous-section `###`.
+
 ## Interfacer avec `prepare_notebooks.py`
 
 Le script remplace chaque bloc `# BEGIN` … `# END` par `# TODO` + `pass`, vide les outputs et remet `execution_count` à `None`. Les commentaires écrits juste après `# BEGIN` deviennent le corps du TODO (voir « Corps du TODO »).
@@ -120,11 +128,11 @@ def check_fit_batch():
     model.Ws = [np.array([[1.0, -2.0]])]
     model.bs = [np.array([0.0])]
     X = np.array([[1.0, 0.0], [0.0, 1.0]])
-    y = np.array([[0.0], [0.0]])
-    model.fit_batch(X, y, lr=0.5, epochs=1)
+    t = np.array([[0.0], [0.0]])
+    model.fit_batch(X, t, lr=0.5, epochs=1)
 
     # simulation à la main (sortie linéaire) :
-    #   z = X @ W.T + b = [[1], [-2]]  ;  delta = z - y = [[1], [-2]]
+    #   z = X @ W.T + b = [[1], [-2]]  ;  delta = z - t = [[1], [-2]]
     #   dW = delta.T @ X / 2 = [[0.5, -1]]  ;  db = delta.sum(0) / 2 = -0.5
     #   W -= lr*dW -> [[0.75, -1.5]]  ;  b -= lr*db -> 0.25
     assert np.array_equal(model.Ws[0], np.array([[0.75, -1.5]]))

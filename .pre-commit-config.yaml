@@ -1,0 +1,19 @@
+repos:
+  - repo: local
+    hooks:
+      - id: extract-notebook-images
+        name: Extract embedded notebook images
+        entry: uv run python scripts/notebooks.py extract
+        language: system
+        files: '^td/.*\.ipynb$'
+      - id: clear-notebook-outputs
+        name: Clear notebook outputs
+        entry: uv run python scripts/notebooks.py clear
+        language: system
+        files: '^td/.*\.ipynb$'
+      - id: prune-orphan-images
+        name: Prune orphan notebook images
+        entry: uv run python scripts/notebooks.py prune
+        language: system
+        pass_filenames: false
+        always_run: true
