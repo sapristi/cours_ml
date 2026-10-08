@@ -50,6 +50,7 @@ Les tableaux numpy sont typés précisément : forme (nombre de dimensions) et d
 ```python
 import numpy as np
 
+# Alias de types pour les tableaux numpy
 Vec = np.ndarray[tuple[int], np.dtype[np.float64]]        # vecteur 1D de flottants
 Mat = np.ndarray[tuple[int, int], np.dtype[np.float64]]   # matrice 2D de flottants
 VecInt = np.ndarray[tuple[int], np.dtype[np.int64]]       # vecteur 1D d'entiers
