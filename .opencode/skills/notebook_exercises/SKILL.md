@@ -32,6 +32,24 @@ Chaque exercice est énoncé dans une **cellule markdown**, sous la forme d'un b
 - Numérotation **séquentielle** sur tout le notebook (Exercice 1, 2, 3…), lettres pour les sous-étapes (`Exercice 7a`, `7b`, …).
 - L'énoncé nomme précisément ce qu'il faut compléter (fonction/méthode), puis la tâche.
 
+## Cellule « à exécuter » (affichage / résultat)
+
+Quand une cellule ne demande **pas** d'écrire de code — elle affiche une figure, un résultat déjà calculé, illustre une notion — ne la formule pas comme un exercice :
+
+- **Pas de verbe à l'impératif** (« Affichez », « Exécutez », « Calculez »…) : cela laisse croire qu'il y a du code à écrire, alors qu'il suffit d'exécuter la cellule.
+- **Pas de blockquote numéroté** `> **Exercice N** — …`.
+- Préférer une tournure descriptive : « On affiche ici … », « La cellule suivante affiche … », « Vérifiez vos réponses. »
+
+```markdown
+<!-- ❌ -->
+Affichez les 5 perceptrons de l'exercice 1 et vérifiez vos réponses.
+
+<!-- ✅ -->
+On affiche ici les 5 perceptrons de l'exercice 1 ; vérifiez vos réponses.
+```
+
+Réserver l'impératif et la numérotation `Exercice` aux cellules où l'étudiant **écrit** du code.
+
 ## Cellule de vérification
 
 **Chaque exercice doit être suivi d'une cellule de code qui teste que le code est correct.** Elle vérifie par `assert` et imprime un message `… OK` en cas de succès.
@@ -49,6 +67,33 @@ check_forward(m, X)
 
 - La cellule de vérification **ne doit pas** être dans un bloc `# BEGIN`/`# END` : elle reste visible dans la version diffusée pour l'auto-évaluation.
 - Elle teste ce que l'étudiant vient de coder : comparaison à une implémentation naïve, gradient numérique, `assert` sur une valeur attendue, etc.
+
+### Tester une fonction d'apprentissage (`fit`/`learn`)
+
+Pour une fonction qui **apprend** (`fit_batch`, `fit_online`, `learn`, `train`, …), ne teste **pas** par heuristique (« la perte diminue », « l'accuracy > 0.9 »). Utilise des **données statiques** (poids et entrées fixés à la main, pas de hasard) et **simule le réseau à la main** pour obtenir le résultat exact attendu, puis `assert` dessus :
+
+```python
+def check_fit_batch():
+    model = MLP([2, 1], output_activation="linear", seed=0)
+    model.Ws = [np.array([[0.1, -0.2]])]
+    model.bs = [np.array([0.05])]
+    X = np.array([[1.0, 0.0], [0.0, 1.0]])
+    y = np.array([[0.3], [0.7]])
+    model.fit_batch(X, y, lr=0.5, epochs=1)
+
+    # simulation à la main d'une étape de descente de gradient (sortie linéaire)
+    W, b, lr = np.array([[0.1, -0.2]]), np.array([0.05]), 0.5
+    z = X @ W.T + b
+    delta = (z - y) / X.shape[0]
+    assert np.allclose(model.Ws[0], W - lr * delta.T @ X)
+    assert np.allclose(model.bs[0], b - lr * delta.sum(axis=0))
+    print("fit_batch check — OK")
+
+check_fit_batch()
+```
+
+- Une **époque** suffit : on vérifie la mécanique d'une mise à jour exacte, pas la convergence.
+- Pour une variante **stochastique** (`fit_online`), fige l'ordre (`seed`) ou teste plutôt l'étape déterministe (`_step`/`fit_batch`).
 
 ## Règles BEGIN/END
 
