@@ -32,6 +32,33 @@ Chaque exercice est énoncé dans une **cellule markdown**, sous la forme d'un b
 - Numérotation **séquentielle** sur tout le notebook (Exercice 1, 2, 3…), lettres pour les sous-étapes (`Exercice 7a`, `7b`, …).
 - L'énoncé nomme précisément ce qu'il faut compléter (fonction/méthode), puis la tâche.
 
+## Typage des fonctions à compléter
+
+Les fonctions et méthodes à compléter (celles dont le corps contient un bloc `# BEGIN`/`# END`) doivent être typées (annotation de type sur les paramètres et sur la valeur de retour).
+
+```python
+# ❌
+def output(self, x1, x2):
+
+# ✅
+def output(self, x1: float, x2: float) -> int:
+```
+## Typage des tableaux numpy
+
+Les tableaux numpy sont typés précisément : forme (nombre de dimensions) et dtype, via des alias définis en tête de notebook:
+
+```python
+import numpy as np
+
+Vec = np.ndarray[tuple[int], np.dtype[np.float64]]        # vecteur 1D de flottants
+Mat = np.ndarray[tuple[int, int], np.dtype[np.float64]]   # matrice 2D de flottants
+VecInt = np.ndarray[tuple[int], np.dtype[np.int64]]       # vecteur 1D d'entiers
+```
+
+- Déclare les alias **dont le notebook a besoin** (inutile d'en déclarer un jamais utilisé).
+- La forme garde un commentaire quand elle porte un sens métier : `W: Mat  # (K, d)`.
+- Pour une fonction **élément par élément** (activation `sigmoid_prime`, `tanh_prime`…), l'entrée et la sortie ont la même forme : type-la selon son usage (`Mat` si appliquée aux pré-activations d'un batch).
+
 ## Cellule « à exécuter » (affichage / résultat)
 
 Quand une cellule ne demande **pas** d'écrire de code — elle affiche une figure, un résultat déjà calculé, illustre une notion — ne la formule pas comme un exercice :
@@ -70,23 +97,37 @@ check_forward(m, X)
 
 ### Tester une fonction d'apprentissage (`fit`/`learn`)
 
-Pour une fonction qui **apprend** (`fit_batch`, `fit_online`, `learn`, `train`, …), ne teste **pas** par heuristique (« la perte diminue », « l'accuracy > 0.9 »). Utilise des **données statiques** (poids et entrées fixés à la main, pas de hasard) et **simule le réseau à la main** pour obtenir le résultat exact attendu, puis `assert` dessus :
+Pour une fonction qui **apprend** (`fit_batch`, `fit_online`, `learn`, `train`, …), ne teste **pas** par heuristique (« la perte diminue », « l'accuracy > 0.9 »). Utilise des **données statiques** (poids et entrées fixés à la main, pas de hasard) et **simule le réseau à la main** pour obtenir la valeur attendue, puis `assert` en **égalité exacte** `==` — pas de `np.allclose`, pas de `abs(x - c) < tol` :
+
+```python
+def check_learn():
+    p = Perceptron(0, 0, 0)
+    p.learn(1, 1, 0, 0.1)   # y=1 != t=0 -> mise à jour
+    assert p.w0 == 0.1
+    assert p.w1 == -0.1
+    assert p.w2 == -0.1
+    print("learn check — OK")
+
+check_learn()
+```
+
+L'égalité exacte n'est possible que si les valeurs sont choisies pour **tomber juste** (poids nuls, entrées `±1`, `r` simple) : le calcul à la main donne alors des littéraux exacts. Si le calcul fait apparaître des valeurs non représentables (`1/3`, sigmoid…), choisis d'autres données au lieu d'introduire une tolérance.
 
 ```python
 def check_fit_batch():
     model = MLP([2, 1], output_activation="linear", seed=0)
-    model.Ws = [np.array([[0.1, -0.2]])]
-    model.bs = [np.array([0.05])]
+    model.Ws = [np.array([[1.0, -2.0]])]
+    model.bs = [np.array([0.0])]
     X = np.array([[1.0, 0.0], [0.0, 1.0]])
-    y = np.array([[0.3], [0.7]])
+    y = np.array([[0.0], [0.0]])
     model.fit_batch(X, y, lr=0.5, epochs=1)
 
-    # simulation à la main d'une étape de descente de gradient (sortie linéaire)
-    W, b, lr = np.array([[0.1, -0.2]]), np.array([0.05]), 0.5
-    z = X @ W.T + b
-    delta = (z - y) / X.shape[0]
-    assert np.allclose(model.Ws[0], W - lr * delta.T @ X)
-    assert np.allclose(model.bs[0], b - lr * delta.sum(axis=0))
+    # simulation à la main (sortie linéaire) :
+    #   z = X @ W.T + b = [[1], [-2]]  ;  delta = z - y = [[1], [-2]]
+    #   dW = delta.T @ X / 2 = [[0.5, -1]]  ;  db = delta.sum(0) / 2 = -0.5
+    #   W -= lr*dW -> [[0.75, -1.5]]  ;  b -= lr*db -> 0.25
+    assert np.array_equal(model.Ws[0], np.array([[0.75, -1.5]]))
+    assert np.array_equal(model.bs[0], np.array([0.25]))
     print("fit_batch check — OK")
 
 check_fit_batch()
@@ -94,6 +135,7 @@ check_fit_batch()
 
 - Une **époque** suffit : on vérifie la mécanique d'une mise à jour exacte, pas la convergence.
 - Pour une variante **stochastique** (`fit_online`), fige l'ordre (`seed`) ou teste plutôt l'étape déterministe (`_step`/`fit_batch`).
+- Pour un réseau à activation **non linéaire** (sigmoid/tanh), le résultat n'est pas un littéral exact : on ne peut pas écrire `==` une constante. On teste alors `forward`/`backward` sur des valeurs de référence pré-calculées (comparaison par `np.allclose`).
 
 ## Règles BEGIN/END
 

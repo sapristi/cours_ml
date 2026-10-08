@@ -1,8 +1,8 @@
-;# 1. Introduction
+# 1. Introduction
 
 Le perceptron (introduit en 1957) est un modèle d'apprentissage basé sur un neurone (simplifié) associé à une règle d'apprentissage.
 
-## 0.1 Modèle de neurone
+## 1.1 Modèle de neurone
 
 ![[Pasted image 20260928193206.png]]
 
@@ -17,7 +17,7 @@ Le perceptron (introduit en 1957) est un modèle d'apprentissage basé sur un ne
 > $$\ H(x)=\left\{\begin{matrix} 0 & \mathrm{si} & x < 0 \\ 1 & \mathrm{si} & x \ge 0. \end{matrix}\right.$$
 
 
-## 0.2 Exercices
+## 1.2 Exercices
 
 - On se place en dimension 2 (i.e. $n = 2$).
 - On choisit la fonction de Heaviside comme fonction d'activation
@@ -48,7 +48,7 @@ Quelle serait le problème si on n'avait pas introduit le *biais* (poids $w_0$) 
 Implémenter en python un tel neurone, à l'aide d'une classe `Perceptron`.
 
 
-# 1. Apprentissage
+# 2. Apprentissage
 
 Afin de faire en sorte que le neurone puisse apprendre, nous allons utiliser un algorithme qui va faire évoluer les poids, à l'aide de données d'entrainement.
 

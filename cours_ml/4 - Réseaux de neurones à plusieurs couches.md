@@ -75,7 +75,12 @@ Afin d'accélérer les calculs avec `numpy`, nous utiliserons les conventions su
 - On peut alors calculer la sortie d'un neurone pour tous les vecteurs d'entrée en une seule opération:
 $$\begin{eqnarray}Z &=& X \cdot W^T + b\\
 Y &=& A(Z)\end{eqnarray} $$
-
+Où $A$ est la fonction matricielle qui applique la fonction d'activation $a$ à chaque élément d'une matrice:
+$$A(Z) = \begin{pmatrix}
+a(z_{1,1}) & \dots & a(z_{1,d}) \\  
+& \dots &\\ 
+a(z_{n,1})  & \dots & a(z_{n,d}) \\ 
+\end{pmatrix}$$
 Note: le biais $b$ est un vecteur ligne; $X \cdot W^T + b$ signifie qu'on ajoute $b$ à chaque ligne de la matrice $X \cdot W^T$.
 <!-- $$W = \begin{pmatrix}
 w_{1,1} & w_{1,2} & \dots & w_{1,d} \\  
@@ -86,7 +91,7 @@ w_{2,1} & w_{2,2} & \dots & w_{2,d} \\
 ## 3.2 Conventions de variables et notations
 
 - On note $L$ le nombre de couches du réseau; on utilisera $l$ pour dénoter l'indice d'une couche quelconque.
-- On note $A \odot B$ le produit de Hadamard entre les matrices $A$ et $B$ (produit terme à terme).
+- On note $U \odot V$ le produit de Hadamard entre les matrices $U$ et $V$ (produit terme à terme).
 ## 3.3 Calcul de la valeur de sortie du réseau
 
 Pour calculer la valeur de sortie du réseau, on va calculer successivement la valeur des $Y_l$, avec les formules 
@@ -108,6 +113,7 @@ $$\begin{eqnarray}
 où 
 - $N$ est le nombre d'échantillons d'entrainement (i.e. le nombre de lignes dans la matrice d'entrée $X$).
 - $\delta_l^{(i)}$ est la $i^{\text{ème}}$ ligne de la matrice $\delta_l$; pour obtenir $\frac{\partial E}{\partial b_l}$ on additionne les lignes de $\delta_l$, afin d'obtenir une unique ligne.
+- $A$ est la fonction qui applique la fonction d'activation $a$ à chaque élément d'une matrice; de même, $A'$ applique $a'$ à chaque élément.
 
 La mise à jour des poids s'obtient enfin en appliquant pour chaque couche $l$:
 $$\begin{eqnarray}

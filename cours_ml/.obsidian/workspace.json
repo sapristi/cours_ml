@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "4 - Réseaux de neurones à plusieurs couches.md",
+                "file": "2 - Perceptron.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "4 - Réseaux de neurones à plusieurs couches"
+              "title": "2 - Perceptron"
             }
           }
         ],
@@ -171,8 +171,8 @@
   },
   "active": "a8c58ff27585c801",
   "lastOpenFiles": [
-    "Annexe 1 - Calcul des dérivées partielles.md",
     "4 - Réseaux de neurones à plusieurs couches.md",
+    "Annexe 1 - Calcul des dérivées partielles.md",
     "Bibliographie.md",
     "assets/Pasted image 20260930182302.png",
     "assets/Pasted image 20260930152903.png",
